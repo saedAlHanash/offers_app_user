@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="29" height="29" viewBox="0 0 29 29">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_23849" data-name="Rectangle 23849" width="29" height="29" transform="translate(246 913)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_308" data-name="Mask Group 308" transform="translate(-246 -913)" clip-path="url(#clip-path)">
+    <g id="svgexport-17_53_" data-name="svgexport-17 (53)" transform="translate(246 913)">
+      <circle id="Ellipse_316" data-name="Ellipse 316" cx="2.549" cy="2.549" r="2.549" transform="translate(10.252 22.146)" fill="#fff"/>
+      <circle id="Ellipse_317" data-name="Ellipse 317" cx="2.549" cy="2.549" r="2.549" transform="translate(18.805 22.146)" fill="#fff"/>
+      <path id="Path_43235" data-name="Path 43235" d="M.85,3.455H4.393l4.1,14.359-.322.643a2.549,2.549,0,0,0,2.28,3.689h14.3a.85.85,0,1,0,0-1.7h-14.3a.85.85,0,0,1-.76-1.23l.235-.47H24.752a.85.85,0,0,0,.817-.616l3.4-11.894a.849.849,0,0,0-.817-1.083H6.645L5.85,2.372a.85.85,0,0,0-.817-.616H.85a.85.85,0,0,0,0,1.7Z" fill="#fff"/>
+    </g>
+  </g>
+</svg>

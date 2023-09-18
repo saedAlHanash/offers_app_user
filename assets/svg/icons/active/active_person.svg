@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="16
+" viewBox="0 0 28 28">
+    <defs>
+        <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#a40000"/>
+            <stop offset="1" stop-color="#40050e"/>
+        </linearGradient>
+        <clipPath id="clip-path">
+            <rect id="Rectangle_23840" data-name="Rectangle 23840" width="28" height="28" transform="translate(66 843)" fill="url(#linear-gradient)"/>
+        </clipPath>
+    </defs>
+    <g id="Mask_Group_304" data-name="Mask Group 304" transform="translate(-66 -843)" clip-path="url(#clip-path)">
+        <g id="svgexport-17_46_" data-name="svgexport-17 (46)" transform="translate(66 843)">
+            <path id="Path_43230" data-name="Path 43230" d="M14,0a7.383,7.383,0,1,0,7.383,7.383A7.391,7.391,0,0,0,14,0Zm9.186,19.589a10.525,10.525,0,0,0-7.545-3.183H12.359a10.525,10.525,0,0,0-7.545,3.183A10.759,10.759,0,0,0,1.7,27.18a.82.82,0,0,0,.82.82H25.484a.82.82,0,0,0,.82-.82A10.759,10.759,0,0,0,23.186,19.589Z" fill="url(#linear-gradient)"/>
+        </g>
+    </g>
+</svg>

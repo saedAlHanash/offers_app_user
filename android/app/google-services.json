@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "650620862352",
+    "project_id": "offers-and-awards",
+    "storage_bucket": "offers-and-awards.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650620862352:android:29f30e364565faac49bd15",
+        "android_client_info": {
+          "package_name": "com.aroodh.aroodh_app.offers_awards"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650620862352-820o65p23mcip6o04vfhstqh2f83cs0a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW1C7z2DTai8X_cJFFPmx-1gxdN3m6poQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650620862352-820o65p23mcip6o04vfhstqh2f83cs0a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

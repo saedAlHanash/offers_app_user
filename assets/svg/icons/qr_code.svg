@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22" viewBox="0 0 22 22">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_23784" data-name="Rectangle 23784" width="22" height="22" transform="translate(351 1133)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_293" data-name="Mask Group 293" transform="translate(-351 -1133)" clip-path="url(#clip-path)">
+    <g id="svgexport-17_38_" data-name="svgexport-17 (38)" transform="translate(351 1133)">
+      <path id="Path_43178" data-name="Path 43178" d="M0,0H6.416V6.416H0ZM0,15.584H6.416V22H0ZM15.584,0H22V6.416H15.584Zm4.582,8.25v5.5H15.583v1.833H22V8.25Zm-4.583,9.166V22h1.833v-2.75h2.75V22H22V17.416ZM8.25,0V1.833h3.666V6.416h1.833V0Z" fill="#fff"/>
+      <path id="Path_43179" data-name="Path 43179" d="M11.916,8.25v3.666H8.25v5.5h3.666V22h1.833V15.583H10.083V13.749h3.666V10.083h1.833v1.833h1.833V8.25Z" fill="#fff"/>
+      <path id="Path_43180" data-name="Path 43180" d="M8.25,19.249h1.833V22H8.25ZM3.666,11.915h2.75v1.833H3.666Z" fill="#fff"/>
+      <path id="Path_43181" data-name="Path 43181" d="M8.25,3.666V8.25H0v5.5H1.833V10.083h8.25V3.666Z" fill="#fff"/>
+    </g>
+  </g>
+</svg>
