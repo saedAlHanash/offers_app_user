@@ -21,6 +21,7 @@ import 'package:offers_awards/utils/dimensions.dart';
 
 class OfferDetailsScreen extends StatefulWidget {
   final int id;
+
   const OfferDetailsScreen({super.key, required this.id});
 
   @override
@@ -108,7 +109,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                             Row(
                               children: [
                                 Text(
-                                  '${intl.NumberFormat('#,###').format(offer.offer)} د.ع',
+                                  '${intl.NumberFormat('#,###').format(offer.offer)} ${AppConstant.currency[offer.currency] ?? offer.currency}',
                                   style: const TextStyle(
                                     fontSize: Dimensions.font18,
                                     fontWeight: FontWeight.bold,
@@ -120,6 +121,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                 CustomOldPrice(
                                   price: offer.price,
                                   fontSize: Dimensions.font16,
+                                  currency: offer.currency,
                                   decorationColor: null,
                                 ),
                               ],

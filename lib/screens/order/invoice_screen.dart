@@ -19,6 +19,7 @@ import 'package:offers_awards/utils/dimensions.dart';
 class InvoiceScreen extends StatefulWidget {
   final int id;
   final int orderNumber;
+
   const InvoiceScreen({
     super.key,
     required this.id,
@@ -147,6 +148,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                       InvoiceItem(
                         orderItem: orderItem,
                         providerName: snapshot.data!.provider.name,
+                        currency: snapshot.data!.currency,
                       ),
                     if (snapshot.data!.couponCode != null)
                       Padding(
@@ -182,7 +184,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                             width: Dimensions.padding24,
                           ),
                           Text(
-                            '${NumberFormat('#,###').format(snapshot.data!.total)} د.ع',
+                            '${NumberFormat('#,###').format(snapshot.data!.total)} ${AppConstant.currency[snapshot.data!.currency] ?? snapshot.data!.currency}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),

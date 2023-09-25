@@ -14,6 +14,7 @@ class Offer {
   final String type;
   final DateTime expiryDate;
   bool isFavorite;
+  final String currency;
   final Provider provider;
 
   Offer({
@@ -31,6 +32,7 @@ class Offer {
     required this.expiryDate,
     required this.isFavorite,
     required this.provider,
+    required this.currency,
   });
 
   factory Offer.fromJson(Map<String, dynamic> json) {
@@ -46,6 +48,7 @@ class Offer {
           : [""],
       price: double.parse(json['price_before'].toString()),
       offer: double.parse(json['price_after'].toString()),
+      currency: json['currency'].toString(),
       percentage: double.parse(json['label'].toString()),
       stars: json.containsKey('stars')
           ? double.parse(json['stars'].toString())
@@ -67,6 +70,7 @@ class Offer {
       images: List<String>.from(json['images'].map((img) => img)),
       price: double.parse(json['price_before'].toString()),
       offer: double.parse(json['price_after'].toString()),
+      currency: json['currency'].toString(),
       percentage: double.parse(json['label'].toString()),
       stars: json.containsKey('stars')
           ? double.parse(json['stars'].toString())
@@ -94,6 +98,7 @@ class Offer {
       "branch": type,
       "expiry_date": expiryDate.toIso8601String(),
       "isFavorite": isFavorite,
+      "currency": currency,
       "provider": provider.toJson(),
     };
   }
@@ -106,6 +111,7 @@ class Offer {
     List<String>? images,
     double? price,
     double? offer,
+    String? currency,
     double? percentage,
     double? stars,
     bool? isGeneral,
@@ -122,6 +128,7 @@ class Offer {
       images: images ?? this.images,
       price: price ?? this.price,
       offer: offer ?? this.offer,
+      currency: currency ?? this.currency,
       percentage: percentage ?? this.percentage,
       stars: stars ?? this.stars,
       isGeneral: isGeneral ?? this.isGeneral,

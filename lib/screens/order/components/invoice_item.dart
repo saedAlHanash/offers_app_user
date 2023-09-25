@@ -7,13 +7,20 @@ import 'package:offers_awards/screens/widgets/custom_network_image.dart';
 import 'package:offers_awards/screens/widgets/custom_snackbar.dart';
 import 'package:offers_awards/screens/widgets/custom_title_text.dart';
 import 'package:offers_awards/utils/app_ui.dart';
+import 'package:offers_awards/utils/constant.dart';
 import 'package:offers_awards/utils/dimensions.dart';
 
 class InvoiceItem extends StatelessWidget {
   final OrderItem orderItem;
   final String providerName;
-  const InvoiceItem(
-      {super.key, required this.orderItem, required this.providerName});
+  final String currency;
+
+  const InvoiceItem({
+    super.key,
+    required this.orderItem,
+    required this.providerName,
+    required this.currency,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -82,14 +89,14 @@ class InvoiceItem extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(vertical: Dimensions.padding8),
                       child: Text(
-                        '${NumberFormat('#,###').format(orderItem.offer)} د.ع',
+                        '${NumberFormat('#,###').format(orderItem.offer)} ${AppConstant.currency[currency] ?? currency}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     Text(
-                      '${NumberFormat('#,###').format(orderItem.total)} د.ع',
+                      '${NumberFormat('#,###').format(orderItem.total)} ${AppConstant.currency[currency] ?? currency}',
                       style: const TextStyle(
                           fontSize: Dimensions.font14,
                           color: AppUI.hintTextColor),

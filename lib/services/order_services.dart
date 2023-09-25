@@ -43,10 +43,12 @@ class OrderServices {
     }
   }
 
-  static Future<int?> checkCoupon(String coupon) async {
+  static Future<int?> checkCoupon(String coupon, int providerId) async {
     final response = await Network.httpPostGetRequest(
-        "${APIList.coupon}/${APIList.checkCoupon}",
-        {'code': coupon.toString()});
+        "${APIList.coupon}/${APIList.checkCoupon}", {
+      'code': coupon.toString(),
+      'provider_id': providerId.toString(),
+    });
     if (response.statusCode == 200) {
       return int.parse(jsonDecode(response.body)['amount'].toString());
     } else if (response.statusCode == 400) {

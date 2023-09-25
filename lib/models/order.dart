@@ -6,6 +6,7 @@ class Order {
   final int orderNumber;
   final double total;
   final double totalBefore;
+  final String currency;
   final String status;
   final String location;
   final String clientName;
@@ -19,6 +20,7 @@ class Order {
     required this.orderNumber,
     required this.total,
     required this.totalBefore,
+    required this.currency,
     required this.status,
     required this.location,
     required this.clientName,
@@ -36,6 +38,7 @@ class Order {
       date: DateTime.parse(json['date'].toString()),
       total: double.parse(json['total'].toString()),
       totalBefore: double.parse(json['total_before'].toString()),
+      currency: json['provider']['currency'].toString(),
       status: json['status'].toString(),
       location: json['location'] ?? '',
       clientName: json['client_name'].toString(),

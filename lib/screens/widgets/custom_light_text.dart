@@ -6,13 +6,15 @@ class CustomLightText extends StatelessWidget {
   final String text;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final Color color;
 
-  const CustomLightText({
-    Key? key,
-    required this.text,
-    this.fontSize = Dimensions.font16,
-    this.fontWeight,
-  }) : super(key: key);
+  const CustomLightText(
+      {Key? key,
+      required this.text,
+      this.fontSize = Dimensions.font16,
+      this.fontWeight,
+      this.color = AppUI.secondaryColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class CustomLightText extends StatelessWidget {
       text,
       textDirection: TextDirection.rtl,
       style: TextStyle(
-        color: AppUI.secondaryColor,
+        color: color,
         fontSize: fontSize,
         fontWeight: fontWeight,
       ),

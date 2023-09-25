@@ -19,7 +19,6 @@ class OrderItemWidget extends StatefulWidget {
 }
 
 class _OrderItemWidgetState extends State<OrderItemWidget> {
- 
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -65,7 +64,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: Dimensions.padding8),
                   child: Text(
-                    '${NumberFormat('#,###').format(widget.order.total)} د.ع',
+                    '${NumberFormat('#,###').format(widget.order.total)} ${AppConstant.currency[widget.order.currency] ?? widget.order.currency}',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -95,7 +94,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: Dimensions.padding8),
                   child: Text(
-                    '${NumberFormat('#,###').format(widget.order.totalBefore)} د.ع',
+                    '${NumberFormat('#,###').format(widget.order.totalBefore)} ${AppConstant.currency[widget.order.currency] ?? widget.order.currency}',
                     style: const TextStyle(
                         fontSize: Dimensions.font14,
                         color: AppUI.hintTextColor),

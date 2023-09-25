@@ -39,6 +39,11 @@ class AppConstant {
     'other': "",
   };
 
+  static const Map<String, String> currency= {
+    "IQD": " د.ع",
+    "USD": "\$",
+  };
+
   static List<Onboard> screens = [
     Onboard(
       title: 'مرحباَ\nفي عروض وجوائز',

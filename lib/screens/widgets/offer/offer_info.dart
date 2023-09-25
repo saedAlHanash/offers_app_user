@@ -7,6 +7,7 @@ import 'package:offers_awards/screens/widgets/custom_old_price.dart';
 import 'package:offers_awards/screens/widgets/custom_snackbar.dart';
 import 'package:offers_awards/services/offers_services.dart';
 import 'package:offers_awards/utils/app_assets.dart';
+import 'package:offers_awards/utils/app_ui.dart';
 import 'package:offers_awards/utils/constant.dart';
 import 'package:offers_awards/utils/dimensions.dart';
 
@@ -42,6 +43,7 @@ class _OfferInfoState extends State<OfferInfo> {
               CustomLightText(
                 text: widget.offer.name,
                 fontSize: Dimensions.font14,
+                color: AppUI.textColor,
               ),
               if (widget.displayRate && !widget.displayType)
                 Padding(
@@ -58,6 +60,7 @@ class _OfferInfoState extends State<OfferInfo> {
                       CustomLightText(
                         text: widget.offer.stars.toString(),
                         fontSize: null,
+                        color: AppUI.textColor,
                       ),
                     ],
                   ),
@@ -70,6 +73,7 @@ class _OfferInfoState extends State<OfferInfo> {
                   child: CustomLightText(
                     text: AppConstant.offerType[widget.offer.type] ?? '',
                     fontSize: null,
+                    color: AppUI.textColor,
                   ),
                 ),
             ],
@@ -80,17 +84,21 @@ class _OfferInfoState extends State<OfferInfo> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CustomLightText(
                   text:
-                  '${NumberFormat('#,###').format(widget.offer.offer)} د.ع',
-                  fontSize: null,
+                  '${NumberFormat('#,###').format(widget.offer.offer)} ${AppConstant.currency[widget.offer.currency]??widget.offer.currency}',
+                  fontSize: Dimensions.font16,
+                  color: AppUI.primaryColor,
                 ),
                 SizedBox(
-                  width: Dimensions.padding4,
+                  width: Dimensions.padding16,
                 ),
                 CustomOldPrice(
                   price: widget.offer.price,
+                  fontSize: Dimensions.font12,
+                  currency: widget.offer.currency,
                 )
               ],
             ),

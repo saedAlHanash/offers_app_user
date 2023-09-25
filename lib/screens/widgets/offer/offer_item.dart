@@ -57,7 +57,7 @@ class OfferItem extends StatelessWidget {
                   ),
                   child: CustomNetworkImage(
                     imageUrl: offer.cover,
-                    height: constraints.maxHeight * 0.6,
+                    height: constraints.maxHeight * 0.7,
                     logo1: true,
                   ),
                 ),
@@ -67,12 +67,12 @@ class OfferItem extends StatelessWidget {
                 right: 0,
                 left: 0,
                 child: Container(
-                  height: constraints.maxHeight * 0.4,
+                  height: constraints.maxHeight * 0.3,
                   padding: EdgeInsets.symmetric(
                     horizontal: Dimensions.padding8,
                   ),
                   decoration: const BoxDecoration(
-                    color: AppUI.darkCardColor,
+                    color: AppUI.greyCardColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
@@ -90,8 +90,8 @@ class OfferItem extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: constraints.maxHeight * 0.35,
-                right: 16,
+                bottom: constraints.maxHeight * 0.27,
+                right: Dimensions.padding16,
                 child: ClipRRect(
                   borderRadius: Dimensions.borderRadius50,
                   child: CachedNetworkImage(

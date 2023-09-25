@@ -12,10 +12,12 @@ import 'package:offers_awards/screens/widgets/custom_snackbar.dart';
 import 'package:offers_awards/services/offers_services.dart';
 import 'package:offers_awards/utils/app_assets.dart';
 import 'package:offers_awards/utils/app_ui.dart';
+import 'package:offers_awards/utils/constant.dart';
 import 'package:offers_awards/utils/dimensions.dart';
 
 class FavOfferInfo extends StatefulWidget {
   final Offer offer;
+
   const FavOfferInfo({Key? key, required this.offer}) : super(key: key);
 
   @override
@@ -37,6 +39,7 @@ class _FavOfferInfoState extends State<FavOfferInfo> {
             CustomLightText(
               text: widget.offer.name,
               fontSize: Dimensions.font14,
+              color: AppUI.textColor,
             ),
             IconButton(
               onPressed: () {
@@ -76,61 +79,75 @@ class _FavOfferInfoState extends State<FavOfferInfo> {
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GetBuilder<CartController>(builder: (cartController) {
-              return GestureDetector(
-                onTap: () {
-                  if (widget.offer.type == 'store_and_delivery' ||
-                      widget.offer.type == 'delivery') {
-                    if (!cartController.existInCart(widget.offer)) {
-                      bool result =cartController.addItem(widget.offer, 1);
-                      if(result){
-                        CustomSnackBar.showRowSnackBarSuccess(
-                            "تمت الإضافة إلى السلة ✔️");
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GetBuilder<CartController>(builder: (cartController) {
+                return GestureDetector(
+                  onTap: () {
+                    if (widget.offer.type == 'store_and_delivery' ||
+                        widget.offer.type == 'delivery') {
+                      if (!cartController.existInCart(widget.offer)) {
+                        bool result = cartController.addItem(widget.offer, 1);
+                        if (result) {
+                          CustomSnackBar.showRowSnackBarSuccess(
+                              "تمت الإضافة إلى السلة ✔️");
+                        }
+                      } else {
+                        CustomSnackBar.showRowSnackBarError(
+                            "المنتج موجود في السلة مسبقاً ✖️");
                       }
                     } else {
-                      CustomSnackBar.showRowSnackBarError(
-                          "المنتج موجود في السلة مسبقاً ✖️");
+                      Get.to(() => QrCodeScreen(
+                            offer: widget.offer,
+                          ));
                     }
-                  } else {
-                    Get.to(() => QrCodeScreen(
-                          offer: widget.offer,
-                        ));
-                  }
-                },
-                child: Chip(
-                  label: Text(
-                    widget.offer.type == 'store_and_delivery' ||
-                            widget.offer.type == 'delivery'
-                        ? "أضف الى السلة"
-                        : "عرض الكود",
-                    style: const TextStyle(fontSize: Dimensions.font12),
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: Dimensions.borderRadius24,
+                      color: AppUI.primaryColor,
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.padding8,vertical: Dimensions.padding4,),
+                    // margin: EdgeInsets.symmetric(vertical: Dimensions.padding4,),
+                    child: Text(
+                      widget.offer.type == 'store_and_delivery' ||
+                              widget.offer.type == 'delivery'
+                          ? "أضف الى السلة"
+                          : "عرض الكود",
+                      style: const TextStyle(
+                        fontSize: Dimensions.font12,
+                        color: AppUI.secondaryColor,
+                      ),
+                    ),
+                    // shape: RoundedRectangleBorder(
+                    //     borderRadius: Dimensions.borderRadius50),
+                    // backgroundColor: AppUI.primaryColor,
                   ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: Dimensions.borderRadius50),
-                  backgroundColor: AppUI.primaryColor,
-                ),
-              );
-            }),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CustomLightText(
-                  text:
-                      '${NumberFormat('#,###').format(widget.offer.offer)} د.ع',
-                  fontSize: null,
-                ),
-                SizedBox(
-                  width: Dimensions.padding4,
-                ),
-                CustomOldPrice(
-                  price: widget.offer.price,
-                )
-              ],
-            ),
-          ],
+                );
+              }),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CustomLightText(
+                    text:
+                        '${NumberFormat('#,###').format(widget.offer.offer)} ${AppConstant.currency[widget.offer.currency]??widget.offer.currency}',
+                    fontSize: Dimensions.font16,
+                    color: AppUI.primaryColor,
+                  ),
+                  SizedBox(
+                    width: Dimensions.padding16,
+                  ),
+                  CustomOldPrice(
+                    price: widget.offer.price,
+                    currency: widget.offer.currency,
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );

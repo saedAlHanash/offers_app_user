@@ -20,6 +20,10 @@ class CartController extends GetxController {
 
   int? get amount => _amount;
 
+  String? _currency;
+
+  String? get currency => _currency;
+
   double? _couponPrice;
 
   double? get couponPrice => _couponPrice;
@@ -66,6 +70,7 @@ class CartController extends GetxController {
     }
     couponPriceF(null);
     cartRepo.addToCartList(getItems);
+    _currency = offer.currency;
     update();
     return true;
   }

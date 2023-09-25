@@ -14,6 +14,7 @@ import 'package:offers_awards/screens/widgets/custom_snackbar.dart';
 import 'package:offers_awards/services/order_services.dart';
 import 'package:offers_awards/utils/app_assets.dart';
 import 'package:offers_awards/utils/app_ui.dart';
+import 'package:offers_awards/utils/constant.dart';
 import 'package:offers_awards/utils/dimensions.dart';
 
 class CartScreen extends StatefulWidget {
@@ -67,7 +68,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                     Text(
-                      '${NumberFormat('#,###').format(cartController.totalAmount)} د.ع',
+                      '${NumberFormat('#,###').format(cartController.totalAmount)} ${AppConstant.currency[cartController.currency] ?? cartController.currency}',
                       style: const TextStyle(
                           fontSize: Dimensions.font16,
                           fontWeight: FontWeight.bold),
@@ -123,7 +124,8 @@ class _CartScreenState extends State<CartScreen> {
                               setState(() {
                                 _isLoading = true;
                               });
-                              OrderServices.checkCoupon(couponController.text)
+                              OrderServices.checkCoupon(couponController.text,
+                                      cartList.first.offer.provider.id)
                                   .then((value) {
                                 cartController.couponPriceF(value);
                                 if (value == null) {
@@ -189,7 +191,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                     Text(
-                      '${NumberFormat('#,###').format(cartController.couponPrice ?? cartController.totalAmount)} د.ع',
+                      '${NumberFormat('#,###').format(cartController.couponPrice ?? cartController.totalAmount)} ${AppConstant.currency[cartController.currency] ?? cartController.currency}',
                       style: const TextStyle(
                           fontSize: Dimensions.font16,
                           fontWeight: FontWeight.bold),

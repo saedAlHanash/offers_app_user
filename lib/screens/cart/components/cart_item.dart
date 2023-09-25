@@ -7,10 +7,12 @@ import 'package:offers_awards/models/cart.dart';
 import 'package:offers_awards/screens/widgets/custom_network_image.dart';
 import 'package:offers_awards/screens/widgets/custom_title_text.dart';
 import 'package:offers_awards/utils/app_ui.dart';
+import 'package:offers_awards/utils/constant.dart';
 import 'package:offers_awards/utils/dimensions.dart';
 
 class CartWidget extends StatefulWidget {
   final CartItem cartItem;
+
   const CartWidget({Key? key, required this.cartItem}) : super(key: key);
 
   @override
@@ -86,14 +88,14 @@ class _CartWidgetState extends State<CartWidget> {
                     padding:
                         EdgeInsets.symmetric(vertical: Dimensions.padding8),
                     child: Text(
-                      '${NumberFormat('#,###').format(cartItem.offer.offer)} د.ع',
+                      '${NumberFormat('#,###').format(cartItem.offer.offer)} ${AppConstant.currency[cartItem.offer.currency] ?? cartItem.offer.currency}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   Text(
-                    '${NumberFormat('#,###').format(cartItem.amount)} د.ع',
+                    '${NumberFormat('#,###').format(cartItem.amount)} ${AppConstant.currency[cartItem.offer.currency] ?? cartItem.offer.currency}',
                     style: const TextStyle(
                         fontSize: Dimensions.font14,
                         color: AppUI.hintTextColor),

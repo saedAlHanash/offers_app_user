@@ -66,7 +66,14 @@ class _CategorySliderState extends State<CategorySlider> {
                       fontWeight: FontWeight.bold,
                     ),
                     SizedBox(height: Dimensions.padding24,),
-                    
+                    // CustomChip(onTap: () {
+                    //   if (slide.adType == "voucher") {
+                    //     Get.to(() => OfferDetailsScreen(id: slide.adID));
+                    //   } else if (slide.adType == "provider") {
+                    //     Get.to(
+                    //             () => OffersListScreen(title: slide.name.toString()));
+                    //   }
+                    // }),
                     Center(
                       child: CustomSliderIndicator(
                         activeIndex: activeIndex,

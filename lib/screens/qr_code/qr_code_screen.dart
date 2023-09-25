@@ -10,12 +10,14 @@ import 'package:offers_awards/screens/widgets/custom_old_price.dart';
 import 'package:offers_awards/screens/widgets/custom_scaffold.dart';
 import 'package:offers_awards/screens/widgets/custom_title_text.dart';
 import 'package:offers_awards/utils/app_assets.dart';
+import 'package:offers_awards/utils/constant.dart';
 import 'package:offers_awards/utils/dimensions.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 
 class QrCodeScreen extends StatefulWidget {
   final Offer offer;
+
   const QrCodeScreen({Key? key, required this.offer}) : super(key: key);
 
   @override
@@ -60,7 +62,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      '${NumberFormat('#,###').format(widget.offer.offer)} د.ع',
+                      '${NumberFormat('#,###').format(widget.offer.offer)} ${AppConstant.currency[widget.offer.currency] ?? widget.offer.currency}',
                       style: const TextStyle(
                           fontSize: Dimensions.font16,
                           fontWeight: FontWeight.bold),
@@ -68,7 +70,9 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                     SizedBox(
                       width: Dimensions.padding4,
                     ),
-                    CustomOldPrice(price: widget.offer.price),
+                    CustomOldPrice(price: widget.offer.price,
+                      currency: widget.offer.currency,
+                    ),
                   ],
                 ),
               ],
@@ -116,7 +120,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                   ),
                 ),
                 Text(
-                  '${NumberFormat('#,###').format(widget.offer.offer)} د.ع',
+                  '${NumberFormat('#,###').format(widget.offer.offer)} ${AppConstant.currency[widget.offer.currency] ?? widget.offer.currency}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: Dimensions.font16,

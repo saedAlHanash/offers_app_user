@@ -13,27 +13,24 @@ class Network {
   static const String _baseURL = "admin.offers-iq.com";
   static const String _api = "client/";
 
-
-
   static Future<http.Response> httpGetRequest(
       String apiURL, Map<String, dynamic> args) async {
     String token = await SessionManager.getToken();
     try {
-    if (token.isEmpty) {
-      Get.off(() => const LoginScreen());
-    }
+      if (token.isEmpty) {
+        Get.off(() => const LoginScreen());
+      }
 
-    final cacheManager = CacheManager(Config('http_cache'));
-    var file = await cacheManager.getSingleFile(
-      Uri.https(_baseURL, _api + apiURL, args).toString(),
-      headers: {"Authorization": 'Bearer $token'},
-    );
+      final cacheManager = CacheManager(Config('http_cache'));
+      var file = await cacheManager.getSingleFile(
+        Uri.https(_baseURL, _api + apiURL, args).toString(),
+        headers: {"Authorization": 'Bearer $token'},
+      );
 
-    if (await file.exists()) {
-      var res = await file.readAsString();
-      return http.Response(res, 200);
-    }
-
+      if (await file.exists()) {
+        var res = await file.readAsString();
+        return http.Response(res, 200);
+      }
 
       var response = await http.get(
         Uri.https(_baseURL, _api + apiURL, args),
@@ -56,7 +53,6 @@ class Network {
         Uri.https(_baseURL, _api + apiURL, args).toString(),
         response.bodyBytes,
       );
-
       return response;
     } catch (e) {
       if (e is http.Response && e.statusCode == 404) {

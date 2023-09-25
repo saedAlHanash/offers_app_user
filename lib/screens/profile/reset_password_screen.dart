@@ -138,7 +138,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   FocusScope.of(context).unfocus();
-
                   if (_isLoading) {
                     CustomSnackBar.showRowSnackBarError("الرجاء الانتظار");
                   } else {

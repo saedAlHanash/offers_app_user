@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:offers_awards/utils/app_ui.dart';
+import 'package:offers_awards/utils/constant.dart';
 
 class CustomOldPrice extends StatelessWidget {
   final double price;
+  final String currency;
   final Color? color;
   final double? fontSize;
   final FontWeight? fontWeight;
@@ -12,9 +14,10 @@ class CustomOldPrice extends StatelessWidget {
   const CustomOldPrice({
     Key? key,
     required this.price,
+    required this.currency,
     this.color = AppUI.hintTextColor,
     this.fontSize,
-    this.decorationColor = AppUI.primaryColor,
+    this.decorationColor = AppUI.hintTextColor,
     this.fontWeight = FontWeight.bold,
   }) : super(key: key);
 
@@ -23,7 +26,7 @@ class CustomOldPrice extends StatelessWidget {
     return Stack(
       children: [
         Text(
-          '${NumberFormat('#,###').format(price)} د.ع',
+          '${NumberFormat('#,###').format(price)} ${AppConstant.currency[currency] ?? currency}',
           style: TextStyle(
             color: color,
             fontSize: fontSize,

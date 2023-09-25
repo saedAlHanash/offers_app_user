@@ -51,8 +51,8 @@ class Dimensions {
   static double bannerListWidth = Dimensions.screenWidth * 0.9; //300;
 
   // height: MediaQuery.of(context).size.height * 0.3,
-  static double offerHeight = 225;
-  static double favOfferHeight = 250;
+  static double offerHeight = 290;
+  static double favOfferHeight = 300;
 
   static double logoSize = 40.0;
   static double countdownItemHeight = 62.0;
