@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:offers_awards/screens/auth/login_screen.dart';
 import 'package:offers_awards/screens/auth/components/custom_auth_nav_bar.dart';
 import 'package:offers_awards/screens/auth/components/custom_pin_code.dart';
-import 'package:offers_awards/screens/onboarding/welcome_screen.dart';
 import 'package:offers_awards/screens/widgets/custom_app_bar.dart';
 import 'package:offers_awards/screens/widgets/custom_scaffold.dart';
 import 'package:offers_awards/screens/widgets/custom_snackbar.dart';
@@ -19,6 +18,7 @@ class VCodeScreen extends StatefulWidget {
   final String phone;
   final String? password;
   final String? cPassword;
+  final String? token;
   final int resendTimes;
 
   const VCodeScreen(
@@ -28,7 +28,8 @@ class VCodeScreen extends StatefulWidget {
       required this.phone,
       this.password,
       this.cPassword,
-      this.resendTimes = 1})
+      this.resendTimes = 1,
+      this.token})
       : super(key: key);
 
   @override
@@ -144,11 +145,9 @@ class _VCodeScreenState extends State<VCodeScreen> {
                         });
                       });
                     } else {
-                      AuthServices.verify(widget.phone, currentVCode!)
+                      AuthServices.verify(
+                              widget.phone, currentVCode!, widget.token!)
                           .then((value) {
-                        if (value) {
-                          Get.to(() => const WelcomeScreen());
-                        }
                         setState(() {
                           _isLoading = false;
                         });
@@ -188,6 +187,7 @@ class _VCodeScreenState extends State<VCodeScreen> {
                                     password: widget.password,
                                     cPassword: widget.cPassword,
                                     isForgotScreen: widget.isForgotScreen,
+                                    token: widget.token,
                                   ),
                               preventDuplicates: false);
                           setState(() {
@@ -207,6 +207,7 @@ class _VCodeScreenState extends State<VCodeScreen> {
                                     password: widget.password,
                                     cPassword: widget.cPassword,
                                     isForgotScreen: widget.isForgotScreen,
+                                    token: widget.token,
                                   ),
                               preventDuplicates: false);
                           setState(() {

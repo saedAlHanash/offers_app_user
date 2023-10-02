@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:offers_awards/db/session.dart';
 import 'package:offers_awards/db/settings.dart';
+import 'package:offers_awards/screens/auth/vcode_screen.dart';
 import 'package:offers_awards/screens/navigator_screen.dart';
 import 'package:offers_awards/notifications/fcm.dart';
+import 'package:offers_awards/screens/onboarding/welcome_screen.dart';
 import 'package:offers_awards/screens/widgets/custom_snackbar.dart';
 import 'package:offers_awards/utils/api_list.dart';
 import 'package:offers_awards/utils/network.dart';
@@ -29,7 +31,7 @@ class AuthServices {
     if (response.statusCode == 200) {
       SessionManager.create(
         name: body['user']['name'],
-        authToken: body['token'],
+        // authToken: body['token'],
         phone: phone,
         address: body['user']['address'] ?? "",
         image: body['user']['profile_image_url'],
@@ -42,10 +44,21 @@ class AuthServices {
             ? DateTime.parse(body['user']['birthdate'])
             : null,
       );
-      Settings.setNotification(true);
-      Get.offAll(
-        () => const MyHomePage(),
-      );
+      if (body['user']['is_confirmed']) {
+        await SessionManager.setToken(body['token']);
+        Settings.setNotification(true);
+        Get.offAll(
+          () => const MyHomePage(),
+        );
+      } else {
+        Get.to(
+          () => VCodeScreen(
+            email: body['user']['email'],
+            phone: phone,
+            token: body['token'],
+          ),
+        );
+      }
       return true;
     } else if (response.statusCode == 422 ||
         response.statusCode == 401 ||
@@ -94,7 +107,7 @@ class AuthServices {
       var body = jsonDecode(response.body)['data'];
       SessionManager.create(
         name: name,
-        authToken: body['token'],
+        // authToken: body['token'],
         phone: phone,
         email: email,
         address: address,
@@ -104,7 +117,13 @@ class AuthServices {
         longitude: longitude,
       );
       Settings.setNotification(true);
-
+      Get.to(
+        () => VCodeScreen(
+          email: email,
+          phone: phone,
+          token: body['token'],
+        ),
+      );
       return true;
     } else if (response.statusCode == 422) {
       var body = jsonDecode(response.body);
@@ -169,12 +188,14 @@ class AuthServices {
     }
   }
 
-  static Future<bool> verify(String phone, String code) async {
+  static Future<bool> verify(String phone, String code, String token) async {
     final response = await Network.httpPostRequest(APIList.verify, {
       'token': code.toString(),
       'phone': phone.toString(),
     });
     if (response.statusCode == 200) {
+      await SessionManager.setToken(token);
+      Get.to(() => const WelcomeScreen());
       return true;
     } else if (response.statusCode == 401 || response.statusCode == 422) {
       var body = jsonDecode(response.body);
@@ -201,7 +222,9 @@ class AuthServices {
     });
     if (response.statusCode == 200) {
       return true;
-    } else if (response.statusCode == 401 || response.statusCode == 422 || response.statusCode == 400) {
+    } else if (response.statusCode == 401 ||
+        response.statusCode == 422 ||
+        response.statusCode == 400) {
       var body = jsonDecode(response.body);
       CustomSnackBar.showRowSnackBarError(
         body['message'],

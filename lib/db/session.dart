@@ -34,6 +34,12 @@ class SessionManager {
     prefs.setString("token", authToken ?? "");
   }
 
+  static setToken(String token)async{
+    final SharedPreferences prefs = await _prefs;
+    await prefs.remove('token');
+    prefs.setString("token", token);
+  }
+
   static update({
     String? name,
     String? phone,

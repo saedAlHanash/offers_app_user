@@ -3,7 +3,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:offers_awards/screens/auth/components/custom_auth_nav_bar.dart';
 import 'package:offers_awards/screens/auth/select_location_screen.dart';
-import 'package:offers_awards/screens/auth/vcode_screen.dart';
 import 'package:offers_awards/screens/location/components/customize_marker.dart';
 import 'package:offers_awards/screens/widgets/custom_app_bar.dart';
 import 'package:offers_awards/screens/widgets/custom_icon_text_button.dart';
@@ -75,12 +74,6 @@ class _AddressScreenState extends State<AddressScreen> {
               _isLoading = false;
             });
 
-            if(value){
-              Get.to(() => VCodeScreen(
-                email: widget.email,
-                phone: widget.phone,
-              ));
-            }
           });
         }
       }
