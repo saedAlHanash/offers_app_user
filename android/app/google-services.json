@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:650620862352:android:3553f3ac79617a6d49bd15",
+        "android_client_info": {
+          "package_name": "com.aroodh.aroodh_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650620862352-820o65p23mcip6o04vfhstqh2f83cs0a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW1C7z2DTai8X_cJFFPmx-1gxdN3m6poQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650620862352-820o65p23mcip6o04vfhstqh2f83cs0a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "650620862352-ovpo92p0o9ktn6avkkqrp6v4jgl78m4d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aroodh.aroodhapp.tajer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:650620862352:android:29f30e364565faac49bd15",
         "android_client_info": {
           "package_name": "com.aroodh.aroodh_app.offers_awards"
@@ -29,6 +65,57 @@
             {
               "client_id": "650620862352-820o65p23mcip6o04vfhstqh2f83cs0a.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "650620862352-ovpo92p0o9ktn6avkkqrp6v4jgl78m4d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aroodh.aroodhapp.tajer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650620862352:android:580cc6db7b1fe41b49bd15",
+        "android_client_info": {
+          "package_name": "com.aroodh.aroodh_app.tajer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650620862352-np9sih0j378b1umh26os2n9i98g90uod.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aroodh.aroodh_app.tajer",
+            "certificate_hash": "f753e4dcfa3c7bee967c78445fb5bce1dce048dd"
+          }
+        },
+        {
+          "client_id": "650620862352-820o65p23mcip6o04vfhstqh2f83cs0a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW1C7z2DTai8X_cJFFPmx-1gxdN3m6poQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650620862352-820o65p23mcip6o04vfhstqh2f83cs0a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "650620862352-ovpo92p0o9ktn6avkkqrp6v4jgl78m4d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aroodh.aroodhapp.tajer"
+              }
             }
           ]
         }
