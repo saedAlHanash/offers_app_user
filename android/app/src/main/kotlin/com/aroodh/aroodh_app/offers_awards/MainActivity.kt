@@ -1,4 +1,4 @@
-package com.aroodh.aroodh_app.offers_awards
+package com.aroodh.aroodh_app
 
 import io.flutter.embedding.android.FlutterActivity
 

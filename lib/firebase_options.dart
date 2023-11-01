@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBW1C7z2DTai8X_cJFFPmx-1gxdN3m6poQ',
-    appId: '1:650620862352:android:29f30e364565faac49bd15',
+    appId: '1:650620862352:android:3553f3ac79617a6d49bd15',
     messagingSenderId: '650620862352',
     projectId: 'offers-and-awards',
     storageBucket: 'offers-and-awards.appspot.com',
