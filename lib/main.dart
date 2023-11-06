@@ -8,13 +8,12 @@ import 'package:offers_awards/controllers/cart_controller.dart';
 import 'package:offers_awards/db/cart.dart';
 import 'package:offers_awards/db/recent_search.dart';
 import 'package:offers_awards/db/settings.dart';
+import 'package:offers_awards/notifications/firebase_options.dart';
 import 'package:offers_awards/notifications/local_notification.dart';
 import 'package:offers_awards/screens/onboarding/slplash_screen.dart';
 import 'package:offers_awards/utils/app_ui.dart';
 import 'package:offers_awards/utils/custom_theme_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,15 +27,20 @@ void main() async {
     statusBarIconBrightness: Brightness.dark,
   ));
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   initGetController();
   runApp(const MyApp());
 }
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
+
 Future<void> initGetController() async {
-  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
   Get.lazyPut(() => sharedPreferences);
   Get.lazyPut(() => Cart(sharedPreferences: Get.find()));
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
@@ -50,14 +54,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocalNotification().initialize();
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print(message);
+      LocalNotification().initialize(message);
       LocalNotification.showNotification(message);
     });
+    LocalNotification().setupInteractMessage();
+
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: GetMaterialApp(
-        title: 'Flutter Demo',
+        title: 'عروض جوائز',
         theme: CustomThemData.themeData,
         debugShowCheckedModeBanner: false,
         locale: const Locale("ar"),

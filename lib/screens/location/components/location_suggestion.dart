@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:offers_awards/models/api_response.dart';
 import 'package:offers_awards/models/offer.dart';
 import 'package:offers_awards/models/provider.dart';
-import 'package:offers_awards/screens/offers/offers_list_screen.dart';
+import 'package:offers_awards/screens/provider/offers_list_screen.dart';
 import 'package:offers_awards/screens/widgets/custom_failed.dart';
 import 'package:offers_awards/screens/widgets/custom_icon_text_button.dart';
 import 'package:offers_awards/screens/widgets/custom_load_more.dart';
@@ -114,8 +114,7 @@ class _LocationSuggestionState extends State<LocationSuggestion> {
                       onTap: () {
                         Get.to(
                           () => OffersListScreen(
-                            title: widget.provider.name,
-                            providerId: widget.provider.id,
+                            provider: widget.provider,
                           ),
                         );
                       },

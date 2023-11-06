@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:offers_awards/controllers/category_controller.dart';
 import 'package:offers_awards/models/provider.dart';
-import 'package:offers_awards/screens/offers/offers_list_screen.dart';
+import 'package:offers_awards/screens/provider/offers_list_screen.dart';
 import 'package:offers_awards/screens/widgets/custom_load_more.dart';
 import 'package:offers_awards/screens/widgets/custom_network_image.dart';
 import 'package:offers_awards/screens/widgets/custom_title_text.dart';
@@ -78,8 +78,7 @@ class _ProvidersTabState extends State<ProvidersTab> {
                       onTap: () {
                         Get.to(
                           () => OffersListScreen(
-                            title: provider.name,
-                            providerId: provider.id,
+                            provider: provider,
                           ),
                         );
                       },

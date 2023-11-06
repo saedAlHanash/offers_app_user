@@ -22,10 +22,25 @@ class Network {
       }
 
       final cacheManager = CacheManager(Config('http_cache'));
-      var file = await cacheManager.getSingleFile(
-        Uri.https(_baseURL, _api + apiURL, args).toString(),
-        headers: {"Authorization": 'Bearer $token'},
-      );
+      var file;
+      try {
+        file = await cacheManager.getSingleFile(
+          Uri.https(_baseURL, _api + apiURL, args).toString(),
+          headers: {
+            "Authorization": 'Bearer $token',
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
+        );
+      } catch (e) {
+        if (e is HttpException) {
+          if (e.message.contains("401")) {
+            SessionManager.clearSession();
+            rethrow;
+          }
+        }
+        rethrow;
+      }
 
       if (await file.exists()) {
         var res = await file.readAsString();
@@ -37,10 +52,10 @@ class Network {
         headers: {
           "Authorization": 'Bearer $token',
           "Accept": "application/json",
+          "Content-Type": "application/json",
           HttpHeaders.cacheControlHeader: 'max-age=3600',
         },
       );
-
       if (response.statusCode == 401) {
         CustomSnackBar.showRowSnackBarSuccess("عذراً الجلسة انتهت");
         SessionManager.clearSession();
