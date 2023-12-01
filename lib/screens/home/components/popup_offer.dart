@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:offers_awards/models/banner.dart';
 import 'package:offers_awards/screens/offer_details/offer_details_screen.dart';
-import 'package:offers_awards/screens/offers/offers_list_screen.dart';
+import 'package:offers_awards/screens/provider/offers_list_screen.dart';
+import 'package:offers_awards/services/provider_services.dart';
 import 'package:offers_awards/utils/app_assets.dart';
 import 'package:offers_awards/utils/app_ui.dart';
 import 'package:offers_awards/utils/dimensions.dart';
@@ -21,12 +22,12 @@ class PopUpOffer {
             children: [
               InkWell(
                 onTap: () async {
-                  if (banner.adType == "voucher") {
-                    Get.to(() =>
-                        OfferDetailsScreen(id: banner.adID));
+                  if (banner.adType == "voucher" && banner.adID != null) {
+                    Get.to(() => OfferDetailsScreen(id: banner.adID!));
                   } else if (banner.adType == "provider") {
-                    Get.to(() => OffersListScreen(
-                        title: banner.name.toString()));
+                    final  provider=await ProviderServices.getById(banner.adID!);
+                    Get.to(() => OffersListScreen(provider: provider,
+                    ));
                   }
                 },
                 child: Container(

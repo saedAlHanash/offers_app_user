@@ -21,4 +21,16 @@ class ProviderServices {
       throw Exception('Failed to connect remote data source');
     }
   }
+
+  static Future<Provider> getById(int id) async {
+    final response =
+    await Network.httpGetRequest("${APIList.provider}/$id}", {});
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body);
+
+      return Provider.fromJson(body['data']);
+    } else {
+      throw Exception('Failed to connect remote data source');
+    }
+  }
 }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:offers_awards/models/banner.dart';
 import 'package:offers_awards/screens/offer_details/offer_details_screen.dart';
-import 'package:offers_awards/screens/offers/offers_list_screen.dart';
+import 'package:offers_awards/screens/provider/offers_list_screen.dart';
 import 'package:offers_awards/screens/widgets/custom_network_image.dart';
+import 'package:offers_awards/services/provider_services.dart';
 import 'package:offers_awards/utils/dimensions.dart';
 
 class FixedBanner extends StatefulWidget {
@@ -40,13 +41,14 @@ class _FixedBannerState extends State<FixedBanner> {
                     height: Dimensions.bannerListHeight,
                     width: Dimensions.bannerListWidth,
                   ),
-                  onTap: () {
-                    if (widget.banners[index].adType == "voucher") {
+                  onTap: () async{
+                    if (widget.banners[index].adType == "voucher" &&
+                        widget.banners[index].adID != null) {
                       Get.to(() =>
-                          OfferDetailsScreen(id: widget.banners[index].adID));
+                          OfferDetailsScreen(id: widget.banners[index].adID!));
                     } else if (widget.banners[index].adType == "provider") {
-                      Get.to(() => OffersListScreen(
-                          title: widget.banners[index].name.toString()));
+                      final provider = await ProviderServices.getById(widget.banners[index].adID!);
+                      Get.to(() => OffersListScreen(provider: provider));
                     }
                   },
                 ),

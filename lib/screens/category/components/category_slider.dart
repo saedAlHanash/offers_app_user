@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:offers_awards/models/home_slider.dart';
 import 'package:offers_awards/screens/offer_details/offer_details_screen.dart';
-import 'package:offers_awards/screens/offers/offers_list_screen.dart';
+import 'package:offers_awards/screens/provider/offers_list_screen.dart';
 import 'package:offers_awards/screens/widgets/custom_light_text.dart';
 import 'package:offers_awards/screens/widgets/custom_network_image.dart';
 import 'package:offers_awards/screens/widgets/custom_slider_indicator.dart';
+import 'package:offers_awards/services/provider_services.dart';
 import 'package:offers_awards/utils/dimensions.dart';
 
 class CategorySlider extends StatefulWidget {
@@ -33,14 +34,14 @@ class _CategorySliderState extends State<CategorySlider> {
       ),
       items: widget.sliders.map((slide) {
         return GestureDetector(
-            onTap: () {
-                if (slide.adType == "voucher") {
-                  Get.to(() => OfferDetailsScreen(id: slide.adID));
-                } else if (slide.adType == "provider") {
-                  Get.to(
-                          () => OffersListScreen(title: slide.name.toString()));
-                }
-              },
+          onTap: () async {
+            if (slide.adType == "voucher" && slide.adID != null) {
+              Get.to(() => OfferDetailsScreen(id: slide.adID!));
+            } else if (slide.adType == "provider") {
+              final provider = await ProviderServices.getById(slide.adID!);
+              Get.to(() => OffersListScreen(provider: provider));
+            }
+          },
           child: Stack(
             children: [
               Container(
