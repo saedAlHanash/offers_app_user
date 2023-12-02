@@ -27,6 +27,7 @@ class APIList {
   static const String getFavorited ="getFavorited";
   static const String getWithFilter ="getWithFilter";
   static const String getByProvider ="all";
+  static const String getByCustomSlider ="getByCustomSlider";
   static const String search ="search";
 
   static const String getChat ="supportChat/getMessages";

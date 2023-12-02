@@ -88,6 +88,25 @@ class OfferServices {
       throw Exception('Failed to connect remote data source');
     }
   }
+  static Future<ApiResponse<Offer>> getByCustomSlider(int id, int page) async {
+    List<Offer> offers = [];
+    final response = await Network.httpGetRequest(
+        "${APIList.voucher}/${APIList.getByCustomSlider}/$id",
+        {'page': page.toString()});
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body);
+      for (final Map<String, dynamic> offer in body['items']) {
+        offers.add(Offer.fromJson(offer));
+      }
+      return ApiResponse<Offer>(
+        items: offers,
+        offsetCount: int.parse(body['number_of_pages'].toString()),
+        count: int.parse(body['number_of_results'].toString()),
+      );
+    } else {
+      throw Exception('Failed to connect remote data source');
+    }
+  }
 
   static Future<ApiResponse<Offer>> search(String query, int page) async {
     List<Offer> offers = [];

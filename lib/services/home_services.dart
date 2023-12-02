@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:offers_awards/models/banner.dart';
+import 'package:offers_awards/models/custom_slide.dart';
 import 'package:offers_awards/models/home_slider.dart';
 import 'package:offers_awards/models/offer.dart';
 import 'package:offers_awards/utils/api_list.dart';
@@ -14,6 +15,7 @@ class HomeServices {
     List<Offer> mostSoldOffers = [];
     List<Offer> newOffers = [];
     List<Offer> hotOffers = [];
+    List<CustomSlide> customSlides=[];
     final response = await Network.httpGetRequest(APIList.home, {});
     var body = jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -36,6 +38,9 @@ class HomeServices {
       for (final Map<String, dynamic> offer in body['hot']) {
         hotOffers.add(Offer.fromJson(offer));
       }
+      for (final Map<String, dynamic> slide in body['custom_slides']) {
+        customSlides.add(CustomSlide.fromJson(slide));
+      }
       return {
         "slider": sliders,
         "first_banner": firstBanner,
@@ -43,6 +48,7 @@ class HomeServices {
         "most_sold": mostSoldOffers,
         "new": newOffers,
         "hot": hotOffers,
+        "custom_slides": customSlides,
       };
     } else {
       throw Exception('Failed to connect remote data source');

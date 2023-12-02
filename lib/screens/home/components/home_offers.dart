@@ -11,8 +11,13 @@ import 'package:offers_awards/utils/dimensions.dart';
 class HomeOffers extends StatelessWidget {
   final String filter;
   final List<Offer> offers;
+  final int? customSliderID;
 
-  const HomeOffers({Key? key, required this.filter, required this.offers})
+  const HomeOffers(
+      {Key? key,
+      required this.filter,
+      required this.offers,
+      this.customSliderID})
       : super(key: key);
 
   @override
@@ -25,12 +30,15 @@ class HomeOffers extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomTitleText(
-                title: AppConstant.offerFilter[filter] ?? '',
+                title: AppConstant.offerFilter[filter] ?? filter,
                 fontSize: Dimensions.font18,
               ),
               TextButton(
                 onPressed: () {
-                  Get.to(() => OffersListScreen(title: filter));
+                  Get.to(() => OffersListScreen(
+                        title: filter,
+                        customSliderID: customSliderID,
+                      ));
                 },
                 child: const Text(
                   "مشاهدة الكل",
@@ -51,7 +59,7 @@ class HomeOffers extends StatelessWidget {
                 children: [
                   OfferItem(
                     offer: offers[index],
-                    displayRate: false, //todo check true,
+                    displayRate: false,
                     displayType: true,
                   ),
                   if (index == offers.length - 1)
@@ -62,7 +70,10 @@ class HomeOffers extends StatelessWidget {
                       child: IconButton(
                         icon: SvgPicture.asset("assets/svg/buttons/more.svg"),
                         onPressed: () {
-                          Get.to(() => OffersListScreen(title: filter));
+                          Get.to(() => OffersListScreen(
+                                title: filter,
+                                customSliderID: customSliderID,
+                              ));
                         },
                       ),
                     ),

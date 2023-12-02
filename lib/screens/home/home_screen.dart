@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:offers_awards/models/category.dart';
+import 'package:offers_awards/models/custom_slide.dart';
 import 'package:offers_awards/screens/home/components/categories_list.dart';
 import 'package:offers_awards/screens/home/components/fixed_banner.dart';
 import 'package:offers_awards/screens/home/components/home_app_bar.dart';
@@ -19,9 +20,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // with AutomaticKeepAliveClientMixin<HomeScreen> {
-  // @override
-  // bool get wantKeepAlive => true;
   int currentIndex = 0;
 
   late Future<Map<String, List<dynamic>>> homeSectionsData;
@@ -62,6 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }
             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+              List<CustomSlide> slides = [];
+              if (snapshot.data!['custom_slides'].isNotEmpty) {
+                slides = snapshot.data!['custom_slides'];
+              }
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -91,25 +93,40 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         }),
 
-                    //categories imgs
+                    //first_banner
                     if (snapshot.data!['first_banner'].isNotEmpty)
                       FixedBanner(
                         banners: snapshot.data!['first_banner'],
                       ),
 
-                    //hot offers title
-                    if (snapshot.data!['hot'].isNotEmpty)
+                    //hot offers
+                    if (snapshot.data!['hot'].isNotEmpty &&
+                        snapshot.data!['custom_slides'].isEmpty)
                       HomeOffers(
                         filter: 'hot',
                         offers: snapshot.data!['hot'],
                       ),
+                    //custom offers title
+                    if (slides.isNotEmpty)
+                      for (final CustomSlide slide in slides)
+                        HomeOffers(
+                          filter: slide.name,
+                          offers: slide.offers,
+                          customSliderID: slide.id,
+                        ),
 
-                    //hot offers  imgs
+                    //banners
                     if (snapshot.data!['last_banner'].isNotEmpty)
                       FixedBanner(
                         banners: snapshot.data!['last_banner'],
                       ),
-
+                    //hot offers
+                    if (snapshot.data!['hot'].isNotEmpty &&
+                        snapshot.data!['custom_slides'].isNotEmpty)
+                      HomeOffers(
+                        filter: 'hot',
+                        offers: snapshot.data!['hot'],
+                      ),
                     //most sold
                     if (snapshot.data!['most_sold'].isNotEmpty)
                       HomeOffers(
