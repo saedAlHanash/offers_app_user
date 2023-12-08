@@ -60,7 +60,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               );
             }
             if (snapshot.hasData) {
-              if (snapshot.data!.isNotEmpty) {
+              if (snapshot.requireData.isNotEmpty) {
                 return ListView.builder(
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
@@ -68,10 +68,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       vertical: Dimensions.padding16,
                       horizontal: Dimensions.padding24,
                     ),
-                    itemCount: snapshot.data!.length,
+                    itemCount: snapshot.requireData.length,
                     itemBuilder: (context, index) {
                       NotificationModel notificationModel =
-                          snapshot.data![index];
+                          snapshot.requireData[index];
 
                       if (notificationModel.type == 'order') {
                         return OrderNotification(

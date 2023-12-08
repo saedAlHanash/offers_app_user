@@ -26,7 +26,7 @@ class _ProvidersTabState extends State<ProvidersTab> {
       RefreshController(initialRefresh: false);
 
   Future<bool> getContentList() async {
-    if (categoryController.page > categoryController.totalOffsets.value) {
+    if (categoryController.page.value > categoryController.totalOffsets.value) {
       setState(() {
         refreshController.loadNoData();
         refreshController.footerMode!.value = LoadStatus.noMore;
@@ -66,7 +66,7 @@ class _ProvidersTabState extends State<ProvidersTab> {
             total: categoryController.count.value,
             body: ListView.builder(
                 shrinkWrap: true,
-                physics: const ScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: categoryController.providers.length,
                 itemBuilder: (BuildContext context, int index) {
                   final Provider provider = categoryController.providers[index];

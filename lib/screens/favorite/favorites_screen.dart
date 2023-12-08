@@ -47,7 +47,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               );
             }
             if (snapshot.hasData) {
-              if (snapshot.data!.isNotEmpty) {
+              if (snapshot.requireData.isNotEmpty) {
                 return Obx(() {
                   return ListView.builder(
                     primary: false,

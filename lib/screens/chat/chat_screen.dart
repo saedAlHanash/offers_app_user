@@ -74,9 +74,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         );
                       }
                       if (snapshot.hasData) {
-                        if (snapshot.data!.isNotEmpty) {
+                        if (snapshot.requireData.isNotEmpty) {
                           return MessagesList(
-                            messages: snapshot.data!,
+                            messages: snapshot.requireData,
                           );
                         } else {
                           return Lottie.asset(

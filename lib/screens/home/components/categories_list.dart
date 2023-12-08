@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:offers_awards/controllers/category_controller.dart';
 import 'package:offers_awards/models/category.dart';
 import 'package:offers_awards/screens/category/category_screen.dart';
 import 'package:offers_awards/screens/widgets/custom_light_text.dart';
@@ -30,6 +31,7 @@ class _CategoriesListState extends State<CategoriesList> {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
+                  Get.put(CategoryController(categoryId: widget.categories[index].id.obs));
                   Get.to(
                     () => CategoryScreen(
                       id: widget.categories[index].id,

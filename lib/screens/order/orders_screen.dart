@@ -59,7 +59,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             future: orders,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                if (snapshot.data!.isEmpty) {
+                if (snapshot.requireData.isEmpty) {
                   return EmptyScreen(
                     svgPath: AppAssets.eOrder,
                     title: 'عذراً لا يوجد أي طلبات',
@@ -77,18 +77,18 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       horizontal: Dimensions.padding4,
                     ),
                     physics: const ScrollPhysics(),
-                    itemCount: snapshot.data!.length,
+                    itemCount: snapshot.requireData.length,
                     itemBuilder: (context, index) => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           DateFormat('HH:mm yyyy/MM/dd ')
-                              .format(snapshot.data![index].date),
+                              .format(snapshot.requireData[index].date),
                           style: const TextStyle(fontSize: Dimensions.font16),
                           // textDirection: TextDirection.rtl,
                         ),
                         OrderItemWidget(
-                          order: snapshot.data![index],
+                          order: snapshot.requireData[index],
                         ),
                       ],
                     ),

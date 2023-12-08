@@ -52,7 +52,7 @@ class _CategorySliderState extends State<CategorySlider> {
                 ),
               ),
               Positioned(
-                bottom: Dimensions.padding24,
+                bottom: 0,
                 top: Dimensions.padding24,
                 right: Dimensions.padding16,
                 left: Dimensions.padding16,

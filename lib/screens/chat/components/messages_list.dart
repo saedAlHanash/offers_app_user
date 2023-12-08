@@ -40,7 +40,7 @@ class _MessagesListState extends State<MessagesList> {
                     return MessageBubble(
                       message:
                           widget.messages[widget.messages.length - 1 - index],
-                      image: snapshot.data!,
+                      image: snapshot.requireData,
                     );
                   } else {
                     return const SizedBox.shrink();

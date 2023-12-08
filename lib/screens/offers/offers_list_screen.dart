@@ -125,15 +125,15 @@ class _OffersListScreenState extends State<OffersListScreen> {
                       return CustomLoadMore(
                         refreshController: refreshController,
                         getData: getContentList,
-                        length: snapshot.data!.items.length,
+                        length: snapshot.requireData.items.length,
                         total: count,
                         body: ListView.builder(
-                          itemCount: snapshot.data!.items.length,
+                          itemCount: snapshot.requireData.items.length,
                           itemBuilder: (context, index) {
                             return SizedBox(
                               height: Dimensions.offerHeight,
                               child: OfferItem(
-                                offer: snapshot.data!.items[index],
+                                offer: snapshot.requireData.items[index],
                               ),
                             );
                           },

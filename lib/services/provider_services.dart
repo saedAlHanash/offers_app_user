@@ -24,7 +24,7 @@ class ProviderServices {
 
   static Future<Provider> getById(int id) async {
     final response =
-    await Network.httpGetRequest("${APIList.provider}/$id}", {});
+        await Network.httpGetRequest("${APIList.provider}/$id}", {});
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
 

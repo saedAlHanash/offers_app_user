@@ -25,9 +25,9 @@ class PopUpOffer {
                   if (banner.adType == "voucher" && banner.adID != null) {
                     Get.to(() => OfferDetailsScreen(id: banner.adID!));
                   } else if (banner.adType == "provider") {
-                    final  provider=await ProviderServices.getById(banner.adID!);
+                   final  provider=await ProviderServices.getById(banner.adID!);
                     Get.to(() => OffersListScreen(provider: provider,
-                    ));
+                        ));
                   }
                 },
                 child: Container(

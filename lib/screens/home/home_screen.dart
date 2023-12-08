@@ -59,23 +59,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             }
-            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            if (snapshot.hasData && snapshot.requireData.isNotEmpty) {
               List<CustomSlide> slides = [];
-              if (snapshot.data!['custom_slides'].isNotEmpty) {
-                slides = snapshot.data!['custom_slides'];
+              if (snapshot.requireData['custom_slides'].isNotEmpty) {
+                slides = snapshot.requireData['custom_slides'];
               }
               return SingleChildScrollView(
                 child: Column(
                   children: [
                     Stack(
                       children: [
-                        if (snapshot.data!['slider'].isNotEmpty)
+                        if (snapshot.requireData['slider'].isNotEmpty)
                           MainSlider(
-                            sliders: snapshot.data!['slider'],
+                            sliders: snapshot.requireData['slider'],
                           ),
                         //appbar
-                        HomeAppBar(
-                          isDark: snapshot.data!['slider'].isEmpty,
+                        const HomeAppBar(
+                          isDark:
+                              true, //snapshot.requireData['slider'].isEmpty,
                         ),
                       ],
                     ),
@@ -85,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, category) {
                           if (category.hasData) {
                             return CategoriesList(
-                              categories: category.data!,
+                              categories: category.requireData,
                             );
                           }
                           return const SpinKitThreeBounce(
@@ -94,52 +95,44 @@ class _HomeScreenState extends State<HomeScreen> {
                         }),
 
                     //first_banner
-                    if (snapshot.data!['first_banner'].isNotEmpty)
+                    if (snapshot.requireData['first_banner'].isNotEmpty)
                       FixedBanner(
-                        banners: snapshot.data!['first_banner'],
+                        banners: snapshot.requireData['first_banner'],
                       ),
 
-                    //hot offers
-                    if (snapshot.data!['hot'].isNotEmpty &&
-                        snapshot.data!['custom_slides'].isEmpty)
-                      HomeOffers(
-                        filter: 'hot',
-                        offers: snapshot.data!['hot'],
-                      ),
                     //custom offers title
                     if (slides.isNotEmpty)
                       for (final CustomSlide slide in slides)
-                        HomeOffers(
-                          filter: slide.name,
-                          offers: slide.offers,
-                          customSliderID: slide.id,
-                        ),
-
-                    //banners
-                    if (snapshot.data!['last_banner'].isNotEmpty)
-                      FixedBanner(
-                        banners: snapshot.data!['last_banner'],
-                      ),
-                    //hot offers
-                    if (snapshot.data!['hot'].isNotEmpty &&
-                        snapshot.data!['custom_slides'].isNotEmpty)
-                      HomeOffers(
-                        filter: 'hot',
-                        offers: snapshot.data!['hot'],
-                      ),
-                    //most sold
-                    if (snapshot.data!['most_sold'].isNotEmpty)
-                      HomeOffers(
-                        filter: 'most_sold',
-                        offers: snapshot.data!['most_sold'],
-                      ),
-
+                        if (slide.offers.isNotEmpty)
+                          HomeOffers(
+                            filter: slide.name,
+                            offers: slide.offers,
+                            customSliderID: slide.id,
+                          ),
                     // new offers
-                    if (snapshot.data!['new'].isNotEmpty)
+                    if (snapshot.requireData['new'].isNotEmpty)
                       HomeOffers(
                         filter: 'new',
-                        offers: snapshot.data!['new'],
+                        offers: snapshot.requireData['new'],
                       ),
+                    //last banners
+                    if (snapshot.requireData['last_banner'].isNotEmpty)
+                      FixedBanner(
+                        banners: snapshot.requireData['last_banner'],
+                      ),
+                    //hot offers
+                    if (snapshot.requireData['hot'].isNotEmpty)
+                      HomeOffers(
+                        filter: 'hot',
+                        offers: snapshot.requireData['hot'],
+                      ),
+                    //most sold
+                    if (snapshot.requireData['most_sold'].isNotEmpty)
+                      HomeOffers(
+                        filter: 'most_sold',
+                        offers: snapshot.requireData['most_sold'],
+                      ),
+
 
                     const SizedBox(
                       height: kBottomNavigationBarHeight * 1.5,
