@@ -74,8 +74,8 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                         children: [
                           const Text("حالة الطلب"),
                           Text(
-                            AppConstant.orderStatus[snapshot.data!.status] ??
-                                snapshot.data!.status,
+                            AppConstant.orderStatus[snapshot.requireData.status] ??
+                                snapshot.requireData.status,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -91,7 +91,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            snapshot.data!.clientName,
+                            snapshot.requireData.clientName,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -100,7 +100,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                             children: [
                               Text(
                                 DateFormat('yyyy/MM/dd ')
-                                    .format(snapshot.data!.date),
+                                    .format(snapshot.requireData.date),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -127,7 +127,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                             width: Dimensions.padding24,
                           ),
                           Text(
-                            "${snapshot.data!.orderItems.length}",
+                            "${snapshot.requireData.orderItems.length}",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -137,20 +137,20 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                     ),
                     CustomIconTextButton(
                       text:
-                          "${snapshot.data!.provider.government}/${snapshot.data!.provider.name}",
+                          "${snapshot.requireData.provider.government}/${snapshot.requireData.provider.name}",
                       iconPath: AppAssets.activeMarkerIcon,
                       function: () async {
                         Get.to(() => ProviderMapScreen(
-                            provider: snapshot.data!.provider));
+                            provider: snapshot.requireData.provider));
                       },
                     ),
-                    for (OrderItem orderItem in snapshot.data!.orderItems)
+                    for (OrderItem orderItem in snapshot.requireData.orderItems)
                       InvoiceItem(
                         orderItem: orderItem,
-                        providerName: snapshot.data!.provider.name,
-                        currency: snapshot.data!.currency,
+                        providerName: snapshot.requireData.provider.name,
+                        currency: snapshot.requireData.currency,
                       ),
-                    if (snapshot.data!.couponCode != null)
+                    if (snapshot.requireData.couponCode != null)
                       Padding(
                         padding: EdgeInsets.symmetric(
                           vertical: Dimensions.padding8,
@@ -163,7 +163,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                               width: Dimensions.padding24,
                             ),
                             Text(
-                              "${snapshot.data!.couponCode}",
+                              "${snapshot.requireData.couponCode}",
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -171,7 +171,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                           ],
                         ),
                       ),
-                    if (snapshot.data!.couponCode != null) const Divider(),
+                    if (snapshot.requireData.couponCode != null) const Divider(),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: Dimensions.padding8,
@@ -184,7 +184,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                             width: Dimensions.padding24,
                           ),
                           Text(
-                            '${NumberFormat('#,###').format(snapshot.data!.total)} ${AppConstant.currency[snapshot.data!.currency] ?? snapshot.data!.currency}',
+                            '${NumberFormat('#,###').format(snapshot.requireData.total)} ${AppConstant.currency[snapshot.requireData.currency] ?? snapshot.requireData.currency}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -193,7 +193,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                       ),
                     ),
                     const Divider(),
-                    if (snapshot.data!.cancelNote != null)
+                    if (snapshot.requireData.cancelNote != null)
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: Dimensions.borderRadius10,
@@ -205,7 +205,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                           Dimensions.padding8,
                         ),
                         child: Text(
-                            "رسالة الرفض: \n ${snapshot.data!.cancelNote!}"),
+                            "رسالة الرفض: \n ${snapshot.requireData.cancelNote!}"),
                       ),
                   ],
                 );

@@ -25,10 +25,9 @@ class _OffersTabState extends State<OffersTab> {
 
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
-  int offset = 1;
 
   Future<bool> getContentList() async {
-    if (offset > categoryController.totalOffsets.value) {
+    if (categoryController.page.value > categoryController.totalOffsets.value) {
       setState(() {
         refreshController.loadNoData();
         refreshController.footerMode!.value = LoadStatus.noMore;
@@ -36,9 +35,6 @@ class _OffersTabState extends State<OffersTab> {
       return true;
     }
     bool result = await categoryController.nextPage();
-    setState(() {
-      offset++;
-    });
 
     return result;
   }
@@ -46,7 +42,6 @@ class _OffersTabState extends State<OffersTab> {
   @override
   void initState() {
     super.initState();
-    offset++;
   }
 
   @override
@@ -72,7 +67,7 @@ class _OffersTabState extends State<OffersTab> {
             total: categoryController.count.value,
             body: ListView.builder(
               shrinkWrap: true,
-              physics: const ScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: categoryController.offers.length,
               itemBuilder: (context, index) {
                 final Offer offer = categoryController.offers[index];

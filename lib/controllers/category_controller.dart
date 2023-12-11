@@ -6,7 +6,7 @@ import 'package:offers_awards/models/provider.dart';
 import 'package:offers_awards/services/category_services.dart';
 
 class CategoryController extends GetxController {
-  final int categoryId;
+  RxInt categoryId;
 
   RxList<Category> subCategories = <Category>[].obs;
   RxList<Offer> offers = <Offer>[].obs;
@@ -22,12 +22,13 @@ class CategoryController extends GetxController {
 
   CategoryController({required this.categoryId});
 
-  Future<CategoryDetails> fetchCategory() async {
+  Future<CategoryDetails> fetchCategory(int id) async {
     debugPrint('from fetchCategory');
     isLoading.value = true;
     Future<CategoryDetails> categoryData =
-        CategoryServices.fetchById(categoryId);
+        CategoryServices.fetchById(id);
     categoryData.then((value) {
+      page = 1.obs;
       subCategories.value = value.subCategories;
       selectedSubCategoryId.value = value.subCategories.first.id;
       totalOffsets.value = value.totalOffsets;
@@ -35,7 +36,7 @@ class CategoryController extends GetxController {
       items.value = value.items;
       offers.value = value.items.map((map) => Offer.fromJson(map)).toList();
     });
-
+    categoryId.value=id;
     isLoading.value = false;
     return categoryData;
   }
@@ -63,9 +64,9 @@ class CategoryController extends GetxController {
 
   Future<bool> nextPage() async {
     page.value++;
-    debugPrint("next page $page}");
+    debugPrint("next page $page");
     var response = CategoryServices.fetchItems(
-      id: categoryId,
+      id: categoryId.value,
       sectionId: selectedSubCategoryId.value,
       sort: sort.value,
       query: query.value,
@@ -87,11 +88,11 @@ class CategoryController extends GetxController {
 
   Future<void> fetchItems() async {
     debugPrint('from fetchItems');
-    page.value = 1;
+    page = 1.obs;
     try {
       isLoading.value = true;
       var response = await CategoryServices.fetchItems(
-        id: categoryId,
+        id: categoryId.value,
         sectionId: selectedSubCategoryId.value,
         sort: sort.value,
         query: query.value,

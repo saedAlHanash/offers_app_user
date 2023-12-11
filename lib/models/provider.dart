@@ -2,6 +2,7 @@ class Provider {
   final int id;
   final String name;
   final String logo;
+  final String cover;
   final String government;
   final String address;
   final int offerNum;
@@ -12,6 +13,7 @@ class Provider {
     required this.id,
     required this.name,
     required this.logo,
+    required this.cover,
     required this.government,
     required this.address,
     required this.offerNum,
@@ -24,6 +26,7 @@ class Provider {
       id: int.parse(json['id'].toString()),
       name: json['company_name'].toString(),
       logo: json['logo'].toString(),
+      cover: json['bg_image'].toString(),
       government: json['government'].toString(),
       address: json['address'].toString(),
       offerNum: json.containsKey('vouchers_count')
@@ -43,6 +46,7 @@ class Provider {
       "id": id,
       "name": name,
       "logo": logo,
+      "bg_image": cover,
       "government": government,
       "address": address,
       "offerNum": offerNum,

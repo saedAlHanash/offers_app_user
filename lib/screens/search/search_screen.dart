@@ -104,7 +104,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       );
                     }
                     if (snapshot.hasData) {
-                      if (snapshot.data!.items.isEmpty) {
+                      if (snapshot.requireData.items.isEmpty) {
                         return EmptyScreen(
                           svgPath: AppAssets.eSearch,
                           title:
@@ -120,15 +120,15 @@ class _SearchScreenState extends State<SearchScreen> {
                       return CustomLoadMore(
                         refreshController: refreshController,
                         getData: getContentList,
-                        length: snapshot.data!.items.length,
+                        length: snapshot.requireData.items.length,
                         total: count,
                         body: ListView.builder(
-                          itemCount: snapshot.data!.items.length,
+                          itemCount: snapshot.requireData.items.length,
                           itemBuilder: (context, index) {
                             return SizedBox(
                               height: Dimensions.offerHeight,
                               child: OfferItem(
-                                offer: snapshot.data!.items[index],
+                                offer: snapshot.requireData.items[index],
                               ),
                             );
                           },

@@ -5,7 +5,7 @@ import 'package:offers_awards/models/offer.dart';
 import 'package:offers_awards/screens/widgets/custom_app_bar.dart';
 import 'package:offers_awards/screens/widgets/custom_failed.dart';
 import 'package:offers_awards/screens/widgets/custom_load_more.dart';
-import 'package:offers_awards/screens/widgets/custom_search_container.dart';
+// import 'package:offers_awards/screens/widgets/custom_search_container.dart';
 import 'package:offers_awards/screens/widgets/offer/offer_item.dart';
 import 'package:offers_awards/services/offers_services.dart';
 import 'package:offers_awards/utils/app_ui.dart';
@@ -15,12 +15,12 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class OffersListScreen extends StatefulWidget {
   final String title;
-  final int? providerId;
+  final int? customSliderID;
 
   const OffersListScreen({
     Key? key,
     required this.title,
-    this.providerId,
+    this.customSliderID,
   }) : super(key: key);
 
   @override
@@ -47,10 +47,10 @@ class _OffersListScreenState extends State<OffersListScreen> {
       return true;
     }
     late ApiResponse<Offer> result;
-    if (widget.providerId == null) {
+    if (widget.customSliderID == null) {
       result = await OfferServices.getWithFilter(widget.title, offset);
     } else {
-      result = await OfferServices.getByProvider(widget.providerId!, offset);
+      result = await OfferServices.getByCustomSlider(widget.customSliderID!, offset);
     }
     setState(() {
       contentList.then((value) => value.items.addAll(result.items));
@@ -62,10 +62,10 @@ class _OffersListScreenState extends State<OffersListScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.providerId == null) {
+    if (widget.customSliderID == null) {
       contentList = OfferServices.getWithFilter(widget.title, offset);
     } else {
-      contentList = OfferServices.getByProvider(widget.providerId!, offset);
+      contentList =  OfferServices.getByCustomSlider(widget.customSliderID!, offset);
     }
 
     contentList.then((value) {
@@ -77,9 +77,9 @@ class _OffersListScreenState extends State<OffersListScreen> {
     setState(() {
       isLoading = true;
     });
-    contentList = widget.providerId == null
+    contentList = widget.customSliderID == null
         ? OfferServices.getWithFilter(widget.title, offset)
-        : OfferServices.getByProvider(widget.providerId!, offset);
+        :  OfferServices.getByCustomSlider(widget.customSliderID!, offset);
     setState(() {
       isLoading = false;
     });
@@ -100,15 +100,15 @@ class _OffersListScreenState extends State<OffersListScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (widget.providerId != null)
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: Dimensions.padding24,
-                ),
-                child: const CustomSearchContainer(
-                  isWhite: false,
-                ),
-              ),
+            // if (widget.customSlider != null)
+            //   Padding(
+            //     padding: EdgeInsets.only(
+            //       bottom: Dimensions.padding24,
+            //     ),
+            //     child: const CustomSearchContainer(
+            //       isWhite: false,
+            //     ),
+            //   ),
             Expanded(
               child: FutureBuilder<ApiResponse<Offer>>(
                   future: contentList,
@@ -125,15 +125,15 @@ class _OffersListScreenState extends State<OffersListScreen> {
                       return CustomLoadMore(
                         refreshController: refreshController,
                         getData: getContentList,
-                        length: snapshot.data!.items.length,
+                        length: snapshot.requireData.items.length,
                         total: count,
                         body: ListView.builder(
-                          itemCount: snapshot.data!.items.length,
+                          itemCount: snapshot.requireData.items.length,
                           itemBuilder: (context, index) {
                             return SizedBox(
                               height: Dimensions.offerHeight,
                               child: OfferItem(
-                                offer: snapshot.data!.items[index],
+                                offer: snapshot.requireData.items[index],
                               ),
                             );
                           },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:offers_awards/models/category.dart';
+import 'package:offers_awards/models/custom_slide.dart';
 import 'package:offers_awards/screens/home/components/categories_list.dart';
 import 'package:offers_awards/screens/home/components/fixed_banner.dart';
 import 'package:offers_awards/screens/home/components/home_app_bar.dart';
@@ -19,9 +20,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // with AutomaticKeepAliveClientMixin<HomeScreen> {
-  // @override
-  // bool get wantKeepAlive => true;
   int currentIndex = 0;
 
   late Future<Map<String, List<dynamic>>> homeSectionsData;
@@ -61,19 +59,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             }
-            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            if (snapshot.hasData && snapshot.requireData.isNotEmpty) {
+              List<CustomSlide> slides = [];
+              if (snapshot.requireData['custom_slides'].isNotEmpty) {
+                slides = snapshot.requireData['custom_slides'];
+              }
               return SingleChildScrollView(
                 child: Column(
                   children: [
                     Stack(
                       children: [
-                        if (snapshot.data!['slider'].isNotEmpty)
+                        if (snapshot.requireData['slider'].isNotEmpty)
                           MainSlider(
-                            sliders: snapshot.data!['slider'],
+                            sliders: snapshot.requireData['slider'],
                           ),
                         //appbar
-                        HomeAppBar(
-                          isDark: snapshot.data!['slider'].isEmpty,
+                        const HomeAppBar(
+                          isDark:
+                              true, //snapshot.requireData['slider'].isEmpty,
                         ),
                       ],
                     ),
@@ -83,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, category) {
                           if (category.hasData) {
                             return CategoriesList(
-                              categories: category.data!,
+                              categories: category.requireData,
                             );
                           }
                           return const SpinKitThreeBounce(
@@ -91,38 +94,45 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         }),
 
-                    //categories imgs
-                    if (snapshot.data!['first_banner'].isNotEmpty)
+                    //first_banner
+                    if (snapshot.requireData['first_banner'].isNotEmpty)
                       FixedBanner(
-                        banners: snapshot.data!['first_banner'],
+                        banners: snapshot.requireData['first_banner'],
                       ),
 
-                    //hot offers title
-                    if (snapshot.data!['hot'].isNotEmpty)
-                      HomeOffers(
-                        filter: 'hot',
-                        offers: snapshot.data!['hot'],
-                      ),
-
-                    //hot offers  imgs
-                    if (snapshot.data!['last_banner'].isNotEmpty)
-                      FixedBanner(
-                        banners: snapshot.data!['last_banner'],
-                      ),
-
-                    //most sold
-                    if (snapshot.data!['most_sold'].isNotEmpty)
-                      HomeOffers(
-                        filter: 'most_sold',
-                        offers: snapshot.data!['most_sold'],
-                      ),
-
+                    //custom offers title
+                    if (slides.isNotEmpty)
+                      for (final CustomSlide slide in slides)
+                        if (slide.offers.isNotEmpty)
+                          HomeOffers(
+                            filter: slide.name,
+                            offers: slide.offers,
+                            customSliderID: slide.id,
+                          ),
                     // new offers
-                    if (snapshot.data!['new'].isNotEmpty)
+                    if (snapshot.requireData['new'].isNotEmpty)
                       HomeOffers(
                         filter: 'new',
-                        offers: snapshot.data!['new'],
+                        offers: snapshot.requireData['new'],
                       ),
+                    //last banners
+                    if (snapshot.requireData['last_banner'].isNotEmpty)
+                      FixedBanner(
+                        banners: snapshot.requireData['last_banner'],
+                      ),
+                    //hot offers
+                    if (snapshot.requireData['hot'].isNotEmpty)
+                      HomeOffers(
+                        filter: 'hot',
+                        offers: snapshot.requireData['hot'],
+                      ),
+                    //most sold
+                    if (snapshot.requireData['most_sold'].isNotEmpty)
+                      HomeOffers(
+                        filter: 'most_sold',
+                        offers: snapshot.requireData['most_sold'],
+                      ),
+
 
                     const SizedBox(
                       height: kBottomNavigationBarHeight * 1.5,

@@ -60,7 +60,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   padding: EdgeInsets.all(
                     Dimensions.padding24,
                   ),
-                  itemCount: snapshot.data!.length,
+                  itemCount: snapshot.requireData.length,
                   itemBuilder: (context, index) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +70,7 @@ class _AboutScreenState extends State<AboutScreen> {
                             vertical: Dimensions.padding24,
                           ),
                           child: Text(
-                            snapshot.data![index].label,
+                            snapshot.requireData[index].label,
                             style: const TextStyle(
                               fontSize: Dimensions.font18,
                               fontWeight: FontWeight.bold,
@@ -78,7 +78,7 @@ class _AboutScreenState extends State<AboutScreen> {
                           ),
                         ),
                         Text(
-                          snapshot.data![index].value,
+                          snapshot.requireData[index].value,
                           style: const TextStyle(
                             fontSize: Dimensions.font16,
                           ),

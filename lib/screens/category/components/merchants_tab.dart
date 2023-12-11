@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:offers_awards/controllers/category_controller.dart';
 import 'package:offers_awards/models/provider.dart';
-import 'package:offers_awards/screens/offers/offers_list_screen.dart';
+import 'package:offers_awards/screens/provider/offers_list_screen.dart';
 import 'package:offers_awards/screens/widgets/custom_load_more.dart';
 import 'package:offers_awards/screens/widgets/custom_network_image.dart';
 import 'package:offers_awards/screens/widgets/custom_title_text.dart';
@@ -26,7 +26,7 @@ class _ProvidersTabState extends State<ProvidersTab> {
       RefreshController(initialRefresh: false);
 
   Future<bool> getContentList() async {
-    if (categoryController.page > categoryController.totalOffsets.value) {
+    if (categoryController.page.value > categoryController.totalOffsets.value) {
       setState(() {
         refreshController.loadNoData();
         refreshController.footerMode!.value = LoadStatus.noMore;
@@ -66,7 +66,7 @@ class _ProvidersTabState extends State<ProvidersTab> {
             total: categoryController.count.value,
             body: ListView.builder(
                 shrinkWrap: true,
-                physics: const ScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: categoryController.providers.length,
                 itemBuilder: (BuildContext context, int index) {
                   final Provider provider = categoryController.providers[index];
@@ -78,8 +78,7 @@ class _ProvidersTabState extends State<ProvidersTab> {
                       onTap: () {
                         Get.to(
                           () => OffersListScreen(
-                            title: provider.name,
-                            providerId: provider.id,
+                            provider: provider,
                           ),
                         );
                       },

@@ -65,7 +65,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                 );
               }
               if (snapshot.hasData) {
-                Offer offer = snapshot.data!['offer'];
+                Offer offer = snapshot.requireData['offer'];
                 return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,7 +226,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                           ),
                         ),
                       ),
-                      SuggestionList(offers: snapshot.data!['suggestions']),
+                      SuggestionList(offers: snapshot.requireData['suggestions']),
                     ],
                   ),
                 );
