@@ -44,6 +44,7 @@ class _CategoryScreenState extends State<CategoryScreen>
 
   @override
   void dispose() {
+    categoryController.onClose();
     super.dispose();
   }
 
@@ -99,39 +100,42 @@ class _CategoryScreenState extends State<CategoryScreen>
             }
             if (snapshot.hasData) {
               return Scaffold(
-                body: NestedScrollView(
-                    headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                          SliverToBoxAdapter(
-                            child: SingleChildScrollView(
-                                child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: Dimensions.padding8),
-                                  child: CategorySlider(
-                                    sliders: snapshot.requireData.sliders,
+                body: Obx(() {
+                  return NestedScrollView(
+                      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                            SliverToBoxAdapter(
+                              child: SingleChildScrollView(
+                                  child: Column(
+                                children: [
+                                  if(snapshot.requireData.sliders.isNotEmpty)
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: Dimensions.padding8),
+                                    child: CategorySlider(
+                                      sliders: snapshot.requireData.sliders,
+                                    ),
                                   ),
-                                ),
-                                if (snapshot
-                                    .requireData.subCategories.isNotEmpty)
-                                  SubCategoriesList(
-                                    subCategoryList:
-                                        snapshot.requireData.subCategories,
-                                  ),
-                                //tabs
-                                const OffersProvidersTabs(),
-                              ],
-                            )),
-                          ),
-                        ],
-                    body: Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: Dimensions.padding8,
-                          horizontal: Dimensions.padding16),
-                      child: categoryController.query.value == 'vouchers'
-                          ? const OffersTab()
-                          : const ProvidersTab(),
-                    )),
+                                  if (snapshot
+                                      .requireData.subCategories.isNotEmpty)
+                                    SubCategoriesList(
+                                      subCategoryList:
+                                          snapshot.requireData.subCategories,
+                                    ),
+                                  //tabs
+                                  const OffersProvidersTabs(),
+                                ],
+                              )),
+                            ),
+                          ],
+                      body: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: Dimensions.padding8,
+                            horizontal: Dimensions.padding16),
+                        child: categoryController.query.value == 'vouchers'
+                            ? const OffersTab()
+                            : const ProvidersTab(),
+                      ));
+                }),
               );
             } else if (snapshot.hasError) {
               debugPrint(snapshot.error.toString());

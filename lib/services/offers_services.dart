@@ -34,6 +34,8 @@ class OfferServices {
   static Future<Map> getById(int id) async {
     List<Offer> suggestions = [];
     final response = await Network.httpGetRequest("${APIList.voucher}/$id", {});
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
       for (final Map<String, dynamic> offer
           in jsonDecode(response.body)['related_vouchers']) {

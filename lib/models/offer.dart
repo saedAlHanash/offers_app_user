@@ -12,7 +12,9 @@ class Offer {
   final double stars;
   final bool isGeneral;
   final String type;
-  final DateTime expiryDate;
+  final DateTime? expiryDate;
+  final int? maxUsage;
+  final int? availableCount;
   bool isFavorite;
   final String currency;
   final Provider provider;
@@ -29,6 +31,8 @@ class Offer {
     required this.stars,
     required this.isGeneral,
     required this.type,
+    required this.maxUsage,
+    required this.availableCount,
     required this.expiryDate,
     required this.isFavorite,
     required this.provider,
@@ -55,9 +59,11 @@ class Offer {
           : 4.0,
       isGeneral: json['is_general'] ?? false,
       type: json['type'].toString(),
-      expiryDate: DateTime.parse(json['expiry_date'].toString()),
+      expiryDate: json['expiry_date']!=null? DateTime.parse(json['expiry_date'].toString()):null,
       isFavorite: json['is_favorated'] ?? false,
       provider: Provider.fromJson(json['provider']),
+      maxUsage: json['max_usage_count']!=null? int.parse(json['max_usage_count'].toString()):null,
+      availableCount: int.parse(json['available_count'].toString()),
     );
   }
 
@@ -77,9 +83,11 @@ class Offer {
           : 4.0,
       isGeneral: json['is_general'] ?? false,
       type: json['type'].toString(),
-      expiryDate: DateTime.parse(json['expiry_date'].toString()),
+      expiryDate: json['expiry_date']!=null? DateTime.parse(json['expiry_date'].toString()):null,
       isFavorite: json['is_favorated'] ?? false,
       provider: Provider.fromJson(json['provider']),
+      availableCount:json['available_count']!=null? int.parse(json['available_count'].toString()):0,
+      maxUsage: json['max_usage_count']!=null? int.parse(json['max_usage_count'].toString()):null,
     );
   }
 
@@ -96,15 +104,19 @@ class Offer {
       "rating": stars,
       "delivery": isGeneral,
       "branch": type,
-      "expiry_date": expiryDate.toIso8601String(),
+      "expiry_date": expiryDate?.toIso8601String(),
       "isFavorite": isFavorite,
       "currency": currency,
+      "available_count": availableCount,
+      "max_usage_count": maxUsage,
       "provider": provider.toJson(),
     };
   }
 
   Offer copyWith({
     int? id,
+    int? maxUsage,
+    int? availableCount,
     String? name,
     String? description,
     String? cover,
@@ -136,6 +148,8 @@ class Offer {
       expiryDate: expiryDate ?? this.expiryDate,
       isFavorite: isFavorite ?? this.isFavorite,
       provider: provider ?? this.provider,
+      maxUsage: maxUsage ?? this.maxUsage,
+      availableCount: availableCount ?? this.availableCount,
     );
   }
 }
