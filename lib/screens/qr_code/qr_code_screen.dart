@@ -38,16 +38,11 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
           children: [
             Center(
               child: QrImageView(
-                data: widget.offer.toString(),
+                data: widget.offer.id.toString(),
                 version: QrVersions.auto,
                 size: MediaQuery.of(context).size.height * 0.35,
               ),
             ),
-            // CustomNetworkImage(
-            //   imageUrl:
-            //       "https://upload.wikimedia.org/wikipedia/commons/3/31/MM_QRcode.png",
-            //   height: MediaQuery.of(context).size.height * 0.4,
-            // ),
             SizedBox(
               height: Dimensions.padding24,
             ),
