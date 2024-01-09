@@ -46,7 +46,7 @@ class CartController extends GetxController {
         return CartItem(
           value.id,
           totalQuantity,
-          (totalQuantity * offer.offer).toDouble(),
+          (totalQuantity * (offer.offer ??offer.price)).toDouble(),
           offer,
         );
       });
@@ -60,7 +60,7 @@ class CartController extends GetxController {
           () => CartItem(
             offer.id,
             quantity,
-            (quantity * offer.offer).toDouble(),
+            (quantity * (offer.offer ??offer.price)).toDouble(),
             offer,
           ),
         );
@@ -112,7 +112,7 @@ class CartController extends GetxController {
   double get totalAmount {
     double total = 0;
     _items.forEach((key, value) {
-      total += (value.quantity * value.offer.offer);
+      total += (value.quantity * (value.offer.offer?? value.offer.price));
     });
     return total;
   }

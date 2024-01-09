@@ -102,15 +102,16 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                             Flexible(
                               child: Text(
                                 "خصم حتى ${offer.percentage}%",
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   fontSize: Dimensions.font18,
+                                  color:offer.percentage==null?Colors.transparent:null
                                 ),
                               ),
                             ),
                             Row(
                               children: [
                                 Text(
-                                  '${intl.NumberFormat('#,###').format(offer.offer)} ${AppConstant.currency[offer.currency] ?? offer.currency}',
+                                  '${intl.NumberFormat('#,###').format(offer.offer ?? offer.price)} ${AppConstant.currency[offer.currency] ?? offer.currency}',
                                   style: const TextStyle(
                                     fontSize: Dimensions.font18,
                                     fontWeight: FontWeight.bold,
@@ -119,12 +120,13 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                 SizedBox(
                                   width: Dimensions.padding8,
                                 ),
-                                CustomOldPrice(
-                                  price: offer.price,
-                                  fontSize: Dimensions.font16,
-                                  currency: offer.currency,
-                                  decorationColor: null,
-                                ),
+                                if (offer.offer != null)
+                                  CustomOldPrice(
+                                    price: offer.price,
+                                    fontSize: Dimensions.font16,
+                                    currency: offer.currency,
+                                    decorationColor: null,
+                                  ),
                               ],
                             ),
                           ],

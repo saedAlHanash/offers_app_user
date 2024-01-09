@@ -133,13 +133,14 @@ class _FavOfferInfoState extends State<FavOfferInfo> {
                 children: [
                   CustomLightText(
                     text:
-                        '${NumberFormat('#,###').format(widget.offer.offer)} ${AppConstant.currency[widget.offer.currency]??widget.offer.currency}',
+                        '${NumberFormat('#,###').format(widget.offer.offer??widget.offer.price)} ${AppConstant.currency[widget.offer.currency]??widget.offer.currency}',
                     fontSize: Dimensions.font16,
                     color: AppUI.primaryColor,
                   ),
                   SizedBox(
                     width: Dimensions.padding16,
                   ),
+                  if(widget.offer.offer !=null)
                   CustomOldPrice(
                     price: widget.offer.price,
                     currency: widget.offer.currency,

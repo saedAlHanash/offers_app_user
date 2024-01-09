@@ -7,8 +7,8 @@ class Offer {
   final String cover;
   final List<String> images;
   final double price;
-  final double offer;
-  final double percentage;
+  final double? offer;
+  final double? percentage;
   final double stars;
   final bool isGeneral;
   final String type;
@@ -26,8 +26,8 @@ class Offer {
     required this.cover,
     required this.images,
     required this.price,
-    required this.offer,
-    required this.percentage,
+     this.offer,
+     this.percentage,
     required this.stars,
     required this.isGeneral,
     required this.type,
@@ -51,9 +51,9 @@ class Offer {
           ? List<String>.from(json['images'].map((img) => img['image_url']))
           : [""],
       price: double.parse(json['price_before'].toString()),
-      offer: double.parse(json['price_after'].toString()),
+      offer: json['price_after']!=null?double.parse(json['price_after'].toString()):null,
       currency: json['currency'].toString(),
-      percentage: double.parse(json['label'].toString()),
+      percentage: json['label']!=null?double.parse(json['label'].toString()):null,
       stars: json.containsKey('stars')
           ? double.parse(json['stars'].toString())
           : 4.0,
@@ -75,9 +75,9 @@ class Offer {
       cover: json['images'].first.toString(),
       images: List<String>.from(json['images'].map((img) => img)),
       price: double.parse(json['price_before'].toString()),
-      offer: double.parse(json['price_after'].toString()),
+      offer: json['price_after']!=null?double.parse(json['price_after'].toString()):null,
       currency: json['currency'].toString(),
-      percentage: double.parse(json['label'].toString()),
+      percentage: json['label']!=null?double.parse(json['label'].toString()):null,
       stars: json.containsKey('stars')
           ? double.parse(json['stars'].toString())
           : 4.0,

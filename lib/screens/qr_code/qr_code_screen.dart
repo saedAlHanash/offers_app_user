@@ -57,7 +57,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      '${NumberFormat('#,###').format(widget.offer.offer)} ${AppConstant.currency[widget.offer.currency] ?? widget.offer.currency}',
+                      '${NumberFormat('#,###').format(widget.offer.offer ?? widget.offer.price)} ${AppConstant.currency[widget.offer.currency] ?? widget.offer.currency}',
                       style: const TextStyle(
                           fontSize: Dimensions.font16,
                           fontWeight: FontWeight.bold),
@@ -65,9 +65,11 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                     SizedBox(
                       width: Dimensions.padding4,
                     ),
-                    CustomOldPrice(price: widget.offer.price,
-                      currency: widget.offer.currency,
-                    ),
+                    if (widget.offer.offer != null)
+                      CustomOldPrice(
+                        price: widget.offer.price,
+                        currency: widget.offer.currency,
+                      ),
                   ],
                 ),
               ],
@@ -75,25 +77,6 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
             SizedBox(
               height: Dimensions.padding24,
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     const CustomTitleText(
-            //       title: "كود الخصم",
-            //     ),
-            //     GestureDetector(
-            //       onLongPress: () {
-            //         Clipboard.setData(
-            //             const ClipboardData(text: 'Text to copy'));
-            //         CustomSnackBar.showRowSnackBarSuccess(
-            //             "تمت النسخ الى الحافظة");
-            //       },
-            //       child: const CustomTitleText(
-            //         title: "Acl251cadf5",
-            //       ),
-            //     ),
-            //   ],
-            // ),
             const Divider(),
             Padding(
               padding: EdgeInsets.symmetric(
