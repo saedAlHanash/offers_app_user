@@ -89,7 +89,7 @@ class InvoiceItem extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(vertical: Dimensions.padding8),
                       child: Text(
-                        '${NumberFormat('#,###').format(orderItem.offer)} ${AppConstant.currency[currency] ?? currency}',
+                        '${NumberFormat('#,###').format(orderItem.offer??orderItem.price)} ${AppConstant.currency[currency] ?? currency}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),

@@ -88,7 +88,7 @@ class _CartWidgetState extends State<CartWidget> {
                     padding:
                         EdgeInsets.symmetric(vertical: Dimensions.padding8),
                     child: Text(
-                      '${NumberFormat('#,###').format(cartItem.offer.offer)} ${AppConstant.currency[cartItem.offer.currency] ?? cartItem.offer.currency}',
+                      '${NumberFormat('#,###').format(cartItem.offer.offer??cartItem.offer.price)} ${AppConstant.currency[cartItem.offer.currency] ?? cartItem.offer.currency}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
