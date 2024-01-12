@@ -10,7 +10,7 @@ import 'package:offers_awards/utils/network.dart';
 class OrderServices {
   static Future<bool> create(
       {required List<CartItem> carts,
-      required String copoun,
+      required String coupon,
       required Place place}) async {
     List<Map<String, dynamic>> elements = [];
     for (int i = 0; i < carts.length; i++) {
@@ -21,7 +21,7 @@ class OrderServices {
     }
     Map<String, dynamic> sendingMap = {
       "elements": elements,
-      "coupon_code": copoun.isNotEmpty ? copoun.toString() : null,
+      "coupon_code": coupon.isNotEmpty ? coupon.toString() : null,
       "location": place.location,
       "latitude": place.latitude,
       "longitude": place.longitude,
@@ -43,14 +43,20 @@ class OrderServices {
     }
   }
 
-  static Future<int?> checkCoupon(String coupon, int providerId) async {
+  static Future<Map?> checkCoupon(
+      String coupon, int providerId, double price) async {
     final response = await Network.httpPostGetRequest(
         "${APIList.coupon}/${APIList.checkCoupon}", {
       'code': coupon.toString(),
       'provider_id': providerId.toString(),
+      'price': price.toString(),
     });
     if (response.statusCode == 200) {
-      return int.parse(jsonDecode(response.body)['amount'].toString());
+      var body=jsonDecode(response.body);
+      return {
+        'amount': double.parse(body['amount'].toString()),
+        'price': double.parse(body['price'].toString()),
+      };
     } else if (response.statusCode == 400) {
       CustomSnackBar.showRowSnackBarError("عذرا هذا الكوبون غير صالح");
       return null;

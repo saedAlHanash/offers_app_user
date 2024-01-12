@@ -16,9 +16,9 @@ class CartController extends GetxController {
 
   List<CartItem> storageItems = [];
 
-  int? _amount;
+  double? _amount;
 
-  int? get amount => _amount;
+  double? get amount => _amount;
 
   String? _currency;
 
@@ -46,7 +46,7 @@ class CartController extends GetxController {
         return CartItem(
           value.id,
           totalQuantity,
-          (totalQuantity * (offer.offer ??offer.price)).toDouble(),
+          (totalQuantity * (offer.offer ?? offer.price)).toDouble(),
           offer,
         );
       });
@@ -60,7 +60,7 @@ class CartController extends GetxController {
           () => CartItem(
             offer.id,
             quantity,
-            (quantity * (offer.offer ??offer.price)).toDouble(),
+            (quantity * (offer.offer ?? offer.price)).toDouble(),
             offer,
           ),
         );
@@ -68,7 +68,8 @@ class CartController extends GetxController {
         //Todo Show some thing
       }
     }
-    couponPriceF(null);
+    couponPriceF(null,null);
+
     cartRepo.addToCartList(getItems);
     _currency = offer.currency;
     update();
@@ -77,7 +78,7 @@ class CartController extends GetxController {
 
   void removeItem(Offer offer) {
     _items.remove(offer.id);
-    couponPriceF(null);
+    couponPriceF(null,null);
 
     cartRepo.addToCartList(getItems);
     update();
@@ -112,7 +113,7 @@ class CartController extends GetxController {
   double get totalAmount {
     double total = 0;
     _items.forEach((key, value) {
-      total += (value.quantity * (value.offer.offer?? value.offer.price));
+      total += (value.quantity * (value.offer.offer ?? value.offer.price));
     });
     return total;
   }
@@ -133,11 +134,13 @@ class CartController extends GetxController {
   }
 
   void couponPriceF(
-    int? value,
+    double? value,
+    double? price,
   ) {
     _amount = value;
-    if (value != null) {
-      _couponPrice = totalAmount - value;
+    if (price != null) {
+      _couponPrice = price;
+      //_couponPrice = totalAmount - value;
     } else {
       _couponPrice = null;
     }
