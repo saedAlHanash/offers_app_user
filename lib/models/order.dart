@@ -59,12 +59,11 @@ class OrderItem {
   final double total;
   final String type;
   final double price;
-  final double offer;
+  final double? offer;
   final int quantity;
   bool isFavorite;
   final bool isAvailable;
   final String cover;
-
 
   OrderItem({
     required this.id,
@@ -76,21 +75,23 @@ class OrderItem {
     required this.isFavorite,
     required this.type,
     required this.price,
-    required this.offer,
+     this.offer,
   });
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
     return OrderItem(
       id: int.parse(json['id'].toString()),
       name: json['name'].toString(),
-      cover:  json['images'].first['image_url'].toString(),
+      cover: json['images'].first['image_url'].toString(),
       quantity: int.parse(json['quantity'].toString()),
       price: double.parse(json['price_before'].toString()),
-      offer: double.parse(json['price_after'].toString()),
+      offer: json['price_after'] != null
+          ? double.parse(json['price_after'].toString())
+          : null,
       total: double.parse(json['total'].toString()),
       isAvailable: json['is_available'] ?? false,
       type: json['type'].toString(),
-      isFavorite: json['is_favorated']??false,
+      isFavorite: json['is_favorated'] ?? false,
     );
   }
 }

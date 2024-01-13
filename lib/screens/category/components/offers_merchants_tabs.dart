@@ -4,13 +4,25 @@ import 'package:offers_awards/controllers/category_controller.dart';
 import 'package:offers_awards/utils/app_ui.dart';
 import 'package:offers_awards/utils/dimensions.dart';
 
-class OffersProvidersTabs extends StatelessWidget {
+class OffersProvidersTabs extends StatefulWidget {
   const OffersProvidersTabs({super.key});
 
+  @override
+  State<OffersProvidersTabs> createState() => _OffersProvidersTabsState();
+}
+
+class _OffersProvidersTabsState extends State<OffersProvidersTabs> {
+  late int selectedTab;
+  final CategoryController categoryController = Get.find<CategoryController>();
+
+  @override
+  void initState() {
+    selectedTab = categoryController.query.value == 'vouchers' ? 0 : 1;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final CategoryController categoryController = Get.find<CategoryController>();
     return Container(
       decoration: BoxDecoration(
         color: AppUI.greyCardColor,
@@ -22,7 +34,9 @@ class OffersProvidersTabs extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-
+              setState(() {
+                selectedTab = 0;
+              });
               categoryController.changeTab('vouchers');
             },
             child: Padding(
@@ -31,15 +45,18 @@ class OffersProvidersTabs extends StatelessWidget {
                 'العروض',
                 style: TextStyle(
                   color:
-                  categoryController.query.value == 'vouchers' ? AppUI.primaryColor : AppUI.textColor,
+                      selectedTab == 0 ? AppUI.primaryColor : AppUI.textColor,
                   fontWeight:
-                  categoryController.query.value == 'vouchers' ? FontWeight.bold : FontWeight.normal,
+                      selectedTab == 0 ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
             ),
           ),
           GestureDetector(
             onTap: () {
+              setState(() {
+                selectedTab = 1;
+              });
               categoryController.changeTab('providers');
             },
             child: Padding(
@@ -48,9 +65,9 @@ class OffersProvidersTabs extends StatelessWidget {
                 'التجار',
                 style: TextStyle(
                   color:
-                  categoryController.query.value == 'providers' ? AppUI.primaryColor : AppUI.textColor,
+                      selectedTab == 1 ? AppUI.primaryColor : AppUI.textColor,
                   fontWeight:
-                  categoryController.query.value == 'providers' ? FontWeight.bold : FontWeight.normal,
+                      selectedTab == 1 ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
             ),

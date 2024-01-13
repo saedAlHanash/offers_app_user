@@ -7,8 +7,9 @@ import 'package:offers_awards/models/offer.dart';
 import 'package:offers_awards/screens/chat/chat_screen.dart';
 import 'package:offers_awards/screens/offer_details/components/actions_row.dart';
 import 'package:offers_awards/screens/offer_details/components/detail_slider.dart';
-import 'package:offers_awards/screens/provider/components/provider_adress.dart';
 import 'package:offers_awards/screens/offer_details/components/suggestion_list.dart';
+import 'package:offers_awards/screens/offer_details/components/usage_count.dart';
+import 'package:offers_awards/screens/provider/components/provider_adress.dart';
 import 'package:offers_awards/screens/widgets/custom_failed.dart';
 import 'package:offers_awards/screens/widgets/custom_flip_countdown_clock/flip_countdown_clock.dart';
 import 'package:offers_awards/screens/widgets/custom_old_price.dart';
@@ -101,15 +102,16 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                             Flexible(
                               child: Text(
                                 "خصم حتى ${offer.percentage}%",
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   fontSize: Dimensions.font18,
+                                  color:offer.percentage==null?Colors.transparent:null
                                 ),
                               ),
                             ),
                             Row(
                               children: [
                                 Text(
-                                  '${intl.NumberFormat('#,###').format(offer.offer)} ${AppConstant.currency[offer.currency] ?? offer.currency}',
+                                  '${intl.NumberFormat('#,###').format(offer.offer ?? offer.price)} ${AppConstant.currency[offer.currency] ?? offer.currency}',
                                   style: const TextStyle(
                                     fontSize: Dimensions.font18,
                                     fontWeight: FontWeight.bold,
@@ -118,12 +120,13 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                 SizedBox(
                                   width: Dimensions.padding8,
                                 ),
-                                CustomOldPrice(
-                                  price: offer.price,
-                                  fontSize: Dimensions.font16,
-                                  currency: offer.currency,
-                                  decorationColor: null,
-                                ),
+                                if (offer.offer != null)
+                                  CustomOldPrice(
+                                    price: offer.price,
+                                    fontSize: Dimensions.font16,
+                                    currency: offer.currency,
+                                    decorationColor: null,
+                                  ),
                               ],
                             ),
                           ],
@@ -162,50 +165,54 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                       ProviderAddress(
                         provider: offer.provider,
                       ),
-                      if (!offer.expiryDate
-                          .difference(DateTime.now())
-                          .isNegative)
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: Dimensions.padding16,
-                            horizontal: Dimensions.padding24,
-                          ),
-                          child: const Text(
-                            "مده العرض",
-                            style: TextStyle(
-                              fontSize: Dimensions.font16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      if (!offer.expiryDate
-                          .difference(DateTime.now())
-                          .isNegative)
-                        Directionality(
-                          textDirection: TextDirection.ltr,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
+                      if (offer.maxUsage != null&&offer.availableCount!=null)
+                        UsageCount(maxUsage: offer.maxUsage!, availableCount: offer.availableCount!),
+                      if (offer.expiryDate != null)
+                        if (!offer.expiryDate!
+                            .difference(DateTime.now())
+                            .isNegative)
+                          Padding(
                             padding: EdgeInsets.symmetric(
                               vertical: Dimensions.padding16,
-                              horizontal: Dimensions.padding8,
+                              horizontal: Dimensions.padding24,
                             ),
-                            alignment: Alignment.center,
-                            child:
-                                LayoutBuilder(builder: (context, constraints) {
-                              return FlipCountdownClock(
-                                duration:
-                                    offer.expiryDate.difference(DateTime.now()),
-                                digitSize: constraints.maxWidth / 11,
-                                width: constraints.maxWidth / 11,
-                                height: Dimensions.countdownItemHeight,
-                                digitColor: AppUI.secondaryColor,
-                                backgroundColor: const [
-                                  AppUI.gradient2Color,
-                                  AppUI.gradient1Color,
-                                ],
-                                separatorColor: AppUI.secondaryColor,
-                                hingeColor: AppUI.primaryColor,
-                                borderRadius: Dimensions.borderRadius10,
+                            child: const Text(
+                              "مده العرض",
+                              style: TextStyle(
+                                fontSize: Dimensions.font16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                      if (offer.expiryDate != null)
+                        if (!offer.expiryDate!
+                            .difference(DateTime.now())
+                            .isNegative)
+                          Directionality(
+                            textDirection: TextDirection.ltr,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.symmetric(
+                                vertical: Dimensions.padding16,
+                                horizontal: Dimensions.padding8,
+                              ),
+                              alignment: Alignment.center,
+                              child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                return FlipCountdownClock(
+                                  duration: offer.expiryDate!
+                                      .difference(DateTime.now()),
+                                  digitSize: constraints.maxWidth / 11,
+                                  width: constraints.maxWidth / 11,
+                                  height: Dimensions.countdownItemHeight,
+                                  digitColor: AppUI.secondaryColor,
+                                  backgroundColor: const [
+                                    AppUI.gradient2Color,
+                                    AppUI.gradient1Color,
+                                  ],
+                                  separatorColor: AppUI.secondaryColor,
+                                  hingeColor: AppUI.primaryColor,
+                                  borderRadius: Dimensions.borderRadius10,
                                 onDone: () => {},
                               );
                             }),

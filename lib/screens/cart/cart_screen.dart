@@ -124,11 +124,14 @@ class _CartScreenState extends State<CartScreen> {
                               setState(() {
                                 _isLoading = true;
                               });
-                              OrderServices.checkCoupon(couponController.text,
-                                      cartList.first.offer.provider.id)
+                              OrderServices.checkCoupon(
+                                      couponController.text,
+                                      cartList.first.offer.provider.id,
+                                      cartController.totalAmount)
                                   .then((value) {
-                                cartController.couponPriceF(value);
-                                if (value == null) {
+                                if (value != null) {
+                                  cartController.couponPriceF(value['amount'],value['price']);
+                                } else {
                                   couponController.clear();
                                 }
                                 setState(() {

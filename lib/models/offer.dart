@@ -7,12 +7,14 @@ class Offer {
   final String cover;
   final List<String> images;
   final double price;
-  final double offer;
-  final double percentage;
+  final double? offer;
+  final double? percentage;
   final double stars;
   final bool isGeneral;
   final String type;
-  final DateTime expiryDate;
+  final DateTime? expiryDate;
+  final int? maxUsage;
+  final int? availableCount;
   bool isFavorite;
   final String currency;
   final Provider provider;
@@ -24,11 +26,13 @@ class Offer {
     required this.cover,
     required this.images,
     required this.price,
-    required this.offer,
-    required this.percentage,
+     this.offer,
+     this.percentage,
     required this.stars,
     required this.isGeneral,
     required this.type,
+    required this.maxUsage,
+    required this.availableCount,
     required this.expiryDate,
     required this.isFavorite,
     required this.provider,
@@ -47,17 +51,19 @@ class Offer {
           ? List<String>.from(json['images'].map((img) => img['image_url']))
           : [""],
       price: double.parse(json['price_before'].toString()),
-      offer: double.parse(json['price_after'].toString()),
+      offer: json['price_after']!=null?double.parse(json['price_after'].toString()):null,
       currency: json['currency'].toString(),
-      percentage: double.parse(json['label'].toString()),
+      percentage: json['label']!=null?double.parse(json['label'].toString()):null,
       stars: json.containsKey('stars')
           ? double.parse(json['stars'].toString())
           : 4.0,
       isGeneral: json['is_general'] ?? false,
       type: json['type'].toString(),
-      expiryDate: DateTime.parse(json['expiry_date'].toString()),
+      expiryDate: json['expiry_date']!=null? DateTime.parse(json['expiry_date'].toString()):null,
       isFavorite: json['is_favorated'] ?? false,
       provider: Provider.fromJson(json['provider']),
+      maxUsage: json['max_usage_count']!=null? int.parse(json['max_usage_count'].toString()):null,
+      availableCount: int.parse(json['available_count'].toString()),
     );
   }
 
@@ -69,17 +75,19 @@ class Offer {
       cover: json['images'].first.toString(),
       images: List<String>.from(json['images'].map((img) => img)),
       price: double.parse(json['price_before'].toString()),
-      offer: double.parse(json['price_after'].toString()),
+      offer: json['price_after']!=null?double.parse(json['price_after'].toString()):null,
       currency: json['currency'].toString(),
-      percentage: double.parse(json['label'].toString()),
+      percentage: json['label']!=null?double.parse(json['label'].toString()):null,
       stars: json.containsKey('stars')
           ? double.parse(json['stars'].toString())
           : 4.0,
       isGeneral: json['is_general'] ?? false,
       type: json['type'].toString(),
-      expiryDate: DateTime.parse(json['expiry_date'].toString()),
+      expiryDate: json['expiry_date']!=null? DateTime.parse(json['expiry_date'].toString()):null,
       isFavorite: json['is_favorated'] ?? false,
       provider: Provider.fromJson(json['provider']),
+      availableCount:json['available_count']!=null? int.parse(json['available_count'].toString()):0,
+      maxUsage: json['max_usage_count']!=null? int.parse(json['max_usage_count'].toString()):null,
     );
   }
 
@@ -96,15 +104,19 @@ class Offer {
       "rating": stars,
       "delivery": isGeneral,
       "branch": type,
-      "expiry_date": expiryDate.toIso8601String(),
+      "expiry_date": expiryDate?.toIso8601String(),
       "isFavorite": isFavorite,
       "currency": currency,
+      "available_count": availableCount,
+      "max_usage_count": maxUsage,
       "provider": provider.toJson(),
     };
   }
 
   Offer copyWith({
     int? id,
+    int? maxUsage,
+    int? availableCount,
     String? name,
     String? description,
     String? cover,
@@ -136,6 +148,8 @@ class Offer {
       expiryDate: expiryDate ?? this.expiryDate,
       isFavorite: isFavorite ?? this.isFavorite,
       provider: provider ?? this.provider,
+      maxUsage: maxUsage ?? this.maxUsage,
+      availableCount: availableCount ?? this.availableCount,
     );
   }
 }

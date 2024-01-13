@@ -38,16 +38,11 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
           children: [
             Center(
               child: QrImageView(
-                data: widget.offer.toString(),
+                data: widget.offer.id.toString(),
                 version: QrVersions.auto,
                 size: MediaQuery.of(context).size.height * 0.35,
               ),
             ),
-            // CustomNetworkImage(
-            //   imageUrl:
-            //       "https://upload.wikimedia.org/wikipedia/commons/3/31/MM_QRcode.png",
-            //   height: MediaQuery.of(context).size.height * 0.4,
-            // ),
             SizedBox(
               height: Dimensions.padding24,
             ),
@@ -62,7 +57,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      '${NumberFormat('#,###').format(widget.offer.offer)} ${AppConstant.currency[widget.offer.currency] ?? widget.offer.currency}',
+                      '${NumberFormat('#,###').format(widget.offer.offer ?? widget.offer.price)} ${AppConstant.currency[widget.offer.currency] ?? widget.offer.currency}',
                       style: const TextStyle(
                           fontSize: Dimensions.font16,
                           fontWeight: FontWeight.bold),
@@ -70,9 +65,11 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                     SizedBox(
                       width: Dimensions.padding4,
                     ),
-                    CustomOldPrice(price: widget.offer.price,
-                      currency: widget.offer.currency,
-                    ),
+                    if (widget.offer.offer != null)
+                      CustomOldPrice(
+                        price: widget.offer.price,
+                        currency: widget.offer.currency,
+                      ),
                   ],
                 ),
               ],
@@ -80,6 +77,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
             SizedBox(
               height: Dimensions.padding24,
             ),
+            //Todo
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //   children: [
@@ -120,7 +118,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                   ),
                 ),
                 Text(
-                  '${NumberFormat('#,###').format(widget.offer.offer)} ${AppConstant.currency[widget.offer.currency] ?? widget.offer.currency}',
+                  '${NumberFormat('#,###').format(widget.offer.offer??widget.offer.price)} ${AppConstant.currency[widget.offer.currency] ?? widget.offer.currency}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: Dimensions.font16,

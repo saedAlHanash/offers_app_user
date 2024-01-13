@@ -113,4 +113,21 @@ class CategoryController extends GetxController {
       // handle error
     }
   }
+  @override
+  void onClose() {
+    print("wee");
+    subCategories.clear();
+    offers.clear();
+    providers.clear();
+    selectedSubCategoryId.value = 0;
+    sort.value = '';
+    query.value = 'vouchers';
+    items.clear();
+    page.value = 1;
+    totalOffsets.value = 1;
+    count.value = 0;
+    isLoading.value = false;
+
+    super.onClose();
+  }
 }
